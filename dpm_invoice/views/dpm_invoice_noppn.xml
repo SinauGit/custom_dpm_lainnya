@@ -84,7 +84,7 @@
                                                 <span t-esc="line.price_unit or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
-                                                <span t-esc="line.discount or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
+                                                <span t-esc="line.discount or 0.0" style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
                                                 <span t-esc="line.discount_fixed or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
