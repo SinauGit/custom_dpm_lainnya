@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Template QWeb -->
+        <template id="my_invoice_noppn_template">
+            <t t-call="web.external_layout">
+                <t t-foreach="docs" t-as="o">
+                    <!-- Language and Page Information in Header -->
+                    <div class="row" style="margin-bottom: 5px;">
+                        <div class="text-center">
+                            <span style="font-weight: bold; font-size: 125%;"><strong>FAKTUR PENJUALAN</strong></span>
+                        </div>
+                    </div>
+                    <br/>
+                    <main>
+                        <div class="page" style="padding: 10px;">
+                            <!-- HEADER -->
+                            <div class="row" style="margin-bottom: 5px;">
+                                <div class="col-6 text-left">
+                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>No Faktur:</strong> <span t-esc="o.name" style="font-weight: bold;"/></p>
+                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>Tanggal:</strong>
+                                    <span t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')" style="font-weight: bold;"/>
+                                    <span t-else="">-</span></p>
+                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>Tanggal JT:</strong> <span t-esc="o.invoice_date_due.strftime('%d.%m.%y') or ''" style="font-weight: bold;"/></p>
+                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>Salesman:</strong> <span t-esc="o.invoice_user_id.name" style="font-weight: bold;"/></p>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><strong>Cust No. :</strong> <span t-esc="o.partner_id.ref or o.partner_id.id" style="font-weight: bold;"/></p>
+                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><span t-esc="o.partner_id.name or ''" style="font-weight: bold;"/></p>
+                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;">
+                                        <span t-esc="o.partner_id.street or ''" style="font-weight: bold;"/><br/>
+                                        <span t-esc="o.partner_id.city or ''" style="font-weight: bold;"/><span>, </span>
+                                        <span t-esc="o.partner_id.country_id.name or ''" style="font-weight: bold;"/>
+                                    </p>
+                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><strong>Telephone:</strong> <span t-esc="o.partner_id.phone or ''" style="font-weight: bold;"/></p>
+                                </div>
+                            </div>
+                            <br/>
+                            <div class="row" style="margin-bottom: 5px;">
+                                <div class="col-12">
+                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>Remarks:</strong> 
+                                         Office Furniture - Incl Case Based On Sales Orders <span t-esc="o.invoice_origin or ''" style="font-weight: bold;"/>. 
+                                        Based On Deliveries ID <span t-esc="o.id or ''" style="font-weight: bold;"/>.
+                                    </p>
+                                </div>
+                            </div>
+                            <br/>
+                            <!-- TABLE -->
+                            <table class="table table-sm table-bordered" style="margin-bottom: 5px;">
+                                <thead>
+                                    <tr>
+                                        <th style="font-weight: bold;">No</th>
+                                        <th style="font-weight: bold;">Brand</th>
+                                        <th style="font-weight: bold;">Model</th>
+                                        <th style="font-weight: bold;">Color</th>
+                                        <th style="font-weight: bold;">Size</th>
+                                        <th style="font-weight: bold;">Qty</th>
+                                        <th style="font-weight: bold;">Hrg Satuan</th>
+                                        <th style="font-weight: bold;">Disc (%)</th>
+                                        <th style="font-weight: bold;">Disc (Amount)</th>
+                                        <th style="font-weight: bold;">Jumlah</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Initialize a counter -->
+                                    <t t-set="counter" t-value="0"/>
+                                    <t t-foreach="o.invoice_line_ids" t-as="line">
+                                        <!-- Increment the counter -->
+                                        <t t-set="counter" t-value="counter + 1"/>
+                                        <tr>
+                                            <td class="text-center" style="font-weight: bold;"><span t-esc="counter" style="font-weight: bold;"/></td>
+                                            <td class="text-center" style="font-weight: bold;"><span t-esc="line.product_id.product_tmpl_id.categ_id.name or ''" style="font-weight: bold;"/></td>
+                                            <td class="text-center" style="font-weight: bold;"><span t-esc="line.product_id.default_code or ''" style="font-weight: bold;"/></td>
+                                            <td class="text-center" style="font-weight: bold;">
+                                                <!-- Memperbaiki pemanggilan warna produk -->
+                                                <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Color').value_ids.mapped('name')) or 'Hitam'" style="font-weight: bold;"/>
+                                            </td>
+                                            <td class="text-center" style="font-weight: bold;">
+                                                <!-- Memperbaiki pemanggilan ukuran produk -->
+                                                <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Size').value_ids.mapped('name')) or 'L'" style="font-weight: bold;"/>
+                                            </td>
+                                            <td class="text-center" style="font-weight: bold;"><span t-esc="line.quantity" style="font-weight: bold;"/></td>
+                                            <td class="text-center" style="font-weight: bold;">
+                                                <span t-esc="line.price_unit or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
+                                            </td>
+                                            <td class="text-center" style="font-weight: bold;">
+                                                <span t-esc="line.discount or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
+                                            </td>
+                                            <td class="text-center" style="font-weight: bold;">
+                                                <span t-esc="line.discount_fixed or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
+                                            </td>
+                                            <td class="text-center" style="font-weight: bold;">
+                                                <span t-esc="line.price_subtotal or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                            <!-- FOOTER -->
+                            <div class="row mt-2" style="margin-bottom: 5px;">
+                                <div class="col-6 text-center">
+                                    <!-- Kosong untuk menggeser total quantity ke kiri -->
+                                    <p style="margin-bottom: 2px;"><strong>Total Quantity:</strong> 
+                                        <span t-esc="sum(int(line.quantity) for line in o.invoice_line_ids)" style="font-weight: bold;"/>
+                                    </p>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <table class="table table-sm table-borderless mb-0" style="margin-bottom: 5px;">
+                                        <!-- Total Gross -->
+                                        <tr>
+                                            <td><strong>Total Gross</strong></td>
+                                            <td class="text-end">
+                                                <span t-esc="sum(line.price_unit for line in o.invoice_line_ids) or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
+                                            </td>
+                                        </tr>
+                                        <!-- Discount -->
+                                        <tr>
+                                            <td><strong>Total Discount</strong></td>
+                                            <td class="text-end">
+                                                <span t-esc="sum(line.discount_fixed for line in o.invoice_line_ids) or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
+                                            </td>
+                                        </tr>
+                                        <!-- Biaya Kirim -->
+                                        <tr>
+                                            <td><strong>Biaya Kirim</strong></td>
+                                            <td class="text-end">
+                                                <!-- <span t-esc="int(o.delivery_cost or 0)" style="font-weight: bold; margin-right: 20px;"/> -->
+                                            </td>
+                                        </tr>
+                                        <!-- Total Jumlah -->
+                                        <tr>
+                                            <td><strong>Total Jumlah</strong></td>
+                                            <td class="text-end">
+                                                <span t-esc="o.amount_total or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
+                                            </td>
+                                        </tr>
+                                    </table>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <br/>
+                                    <p>Signature <span t-esc="o.partner_id.name" style="font-weight: bold;"/> Date 
+                                    <span t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')" style="font-weight: bold;"/>
+                                    <span t-else="">-</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </main>
+                </t>
+            </t>
+        </template>
+
+        <template id="report_my_dn_noppn">
+            <t t-call="web.html_container">
+                <t t-call="my_invoice_noppn_template" t-lang="lang"/>
+            </t>
+        </template>
+    </data>
+</odoo>
