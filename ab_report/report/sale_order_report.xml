@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="so_header" name="so_header">
+        <div class="header">
+            <div class="row">
+                <div class="col-1">
+                    <img class="mt-2" t-if="company.logo" t-att-src="image_data_uri(company.logo)" width="150%"/>
+                </div>
+                <div class="col-6">
+                    <table style="margin-left: 45px;" class="table-borderless">
+                        <tr>
+                            <td colspan="3">
+                                <strong style="; font-size: 18px;">
+                                    <t t-esc="company.name"/>
+                                </strong>
+                            </td>
+                        </tr>
+                        <tr style="font-size: 15px;">
+                            <td>
+                            <div t-field="company.partner_id" t-options='{"widget": "contact", "fields": ["address"], "no_marker": True, "phone_icons": True}' name="partner_address"/>
+                            </td>
+                            <!-- <td width="25%">
+                                Alamat
+                            </td>
+                            <td width="5%"> : </td>
+                            <td width="70%">
+                                <t t-if="o.company_id">
+                                    <t t-if="o.company_id.street">
+                                        <t t-esc="o.company_id.street"/>
+                                    </t>
+                                    <t t-if="o.company_id.street2">
+                                        <br></br>
+                                        <t t-esc="o.company_id.street2"/>
+                                    </t>
+                                    <t t-if="o.env.company.city and not o.env.company.state_id">
+                                        <br></br>
+                                        <t t-esc="o.env.company.city"/>
+                                    </t>
+                                    <t t-elif="o.env.company.state_id and not o.env.company.city">
+                                        <br></br>
+                                        <t t-esc="o.env.company.state_id.name"/>
+                                    </t>
+                                    <t t-else="">
+                                        <br></br>
+                                        <t t-esc="o.env.company.city"/>
+                                    </t>
+                                    <t t-if="o.company_id.zip">
+                                        <t t-esc="o.company_id.zip"/>
+                                    </t>
+                                </t>
+                            </td> -->
+                        </tr>
+                        <!-- <tr style="font-size: 15px;">
+                            <td width="25%">
+                                <span>NPWPPPP</span>
+                            </td>
+                            <td width="5%"> : </td>
+                            <td width="70%">
+                                <t t-esc="o.company_id.vat"/>
+                            </td>
+                        </tr> -->
+                    </table>
+                </div>
+                <!-- <div class="col-4 offset-1">
+                    <div class="row">
+                        <table width="100%">
+                            <tr style="font-size:17px;">
+                                <td style="background-color:green; padding-top:2px;">
+                                    <strong>
+                                        <center style="vertical-align: baseline; color: white;">
+                                        No : <t t-esc="o.name"/>
+                                        </center>
+                                    </strong>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div> -->
+            </div>
+            <div class="row mt-1">
+                <center>
+                    <!-- <strong style="font-size: 22px;">
+                        <t t-if="o._name == 'sale.order'">
+                            SALE ORDER
+                        </t>
+                        <t t-if="o._name == 'purchase.order'">
+                            PURCHASE ORDER
+                        </t>
+                        <t t-if="o._name == 'stock.picking'">
+                            Delivery Order
+                        </t>
+                        <t t-if="o._name == 'account.move'">
+                            INVOICE
+                        </t>
+                    </strong> -->
+                    <div style='width: 100%; height: 1px; border: 1px solid black;' />
+                </center>
+            </div>
+        </div>
+    </template>
+
+
+    <template id="so_footer" name="so_footer">
+        <div class="text-center">
+            <div style='width: 100%; border-style: solid; border-width: 1px;margin-bottom:5px;'/>
+            <t t-if="o">
+                <t t-esc="o.user_id.email"/>
+            </t>
+            <t t-esc="company.website"/>
+            <div style='width: 100%; border-style: solid; border-width: 1px;margin-top:5px;'/>
+            <div t-if="report_type == 'pdf'" class="text-muted">
+                    Page:
+                <span class="page"/>
+                    of
+                <span class="topage"/>
+            </div>
+        </div>
+    </template>
+
+    <template id="custom_layout_report" inherit_id="web.external_layout_standard">
+        <xpath expr="//div[1]" position="replace">
+            <t t-call="ab_report.so_header"/>
+        </xpath>
+        <xpath expr="//div[hasclass('text-center')]" position="replace">
+            <t t-call="ab_report.so_footer"/>
+        </xpath>
+    </template>
+
+
+
+</odoo>

@@ -1,0 +1,536 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="inv_header">
+        <style>
+        table.kop_inv tr td, table.kop-pt tr td {
+            padding-top: 3px;
+            padding-bottom: 3px;
+            padding-left: 3px;
+        }
+        table.kop_inv tr, table.kop-pt tr {
+            font-size: 11px
+        }
+        </style>
+        <div class="row">
+            <div class="col-1">
+                <img class="mt-4" t-if="o.env.company.logo" t-att-src="image_data_uri(o.env.company.logo)" width="100%"/>
+            </div>
+            <div class="col-5">
+                <table style="margin-left: 8px;" width="100%" class="kop-pt table-borderless">
+                    <tr>
+                        <td colspan="3">
+                            <strong style="color: blue; font-size: 18px;">
+                                <t t-esc="o.company_id.name"/>
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%">
+                            <t t-if="o.env.company">
+                                <t t-if="o.env.company.street">
+                                    <t t-esc="o.env.company.street"/>
+                                </t>
+                                <t t-if="o.env.company.street2">
+                                    <br></br>
+                                    <span>
+                                        <t t-esc="o.env.company.street2"/>
+                                    </span>
+                                </t>
+                                <t t-if="o.env.company.city and not o.env.company.state_id">
+                                    <br></br>
+                                    <span>
+                                        <t t-esc="o.env.company.city"/>
+                                    </span>
+
+                                </t>
+                                <t t-elif="o.env.company.state_id and not o.env.company.city">
+                                    <br></br>
+                                    <span>
+                                        <t t-esc="o.env.company.state_id.name"/>
+                                    </span>
+                                </t>
+                                <t t-else="">
+                                    <br></br>
+                                    <span>
+                                        <t t-esc="o.env.company.city"/>
+                                    </span>
+                                </t>
+                                <t t-if="o.env.company.zip">
+                                    <span>
+                                        <t t-esc="o.env.company.zip"/>
+                                    </span>
+                                </t>
+                                <t t-if="o.env.company.vat">
+                                    <br></br>
+                                    <span>NPWP :
+                                        <t t-esc="o.env.company.vat"/>
+                                    </span>
+                                </t>
+                                <t t-if="o.env.company.phone">
+                                    <br></br>
+                                    <span>Ph.
+                                        <t t-esc="o.env.company.phone"/>
+                                    </span>
+                                </t>
+
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-5 offset-1">
+                <table class="kop_inv table-borderless" width="95%" style="margin-left: 20px">
+                    <tr style="font-size:18px;">
+                        <th colspan="3" style="background-color:#e5e7e9; padding-top: 2px; padding-bottom: 2px">
+                            <center style="vertical-align: baseline;">
+                            INVOICE                            
+                            </center>
+                        </th>
+                    </tr>
+                    <tr height="10px"></tr>
+                    <tr>
+                        <td width="29%">Date</td>
+                        <td width="5%">:</td>
+                        <td width="66%">
+                            <t t-if="o.invoice_date">
+                                <t t-esc="o.invoice_date.strftime('%d-%b-%Y')"/>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="29%">Invoice No.</td>
+                        <td width="5%">:</td>
+                        <td width="66%">
+                            <t t-esc="o.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="29%">Sales Order</td>
+                        <td width="5%">:</td>
+                        <td width="66%">
+                            <t t-if="o.sale_order_count">
+                                <t t-esc="o.invoice_line_ids.mapped('sale_line_ids.order_id.name')[0] if o.invoice_line_ids.mapped('sale_line_ids.order_id.name') else ''"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </template>
+
+    <template id="inv_shipto_billto" name="inv_shipto">
+        <style>
+            .cols-6 {
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+            }
+            .rows {
+                display: -webkit-box; /* wkhtmltopdf uses this one */
+                display: -webkit-flex;
+                display: flex;
+            }
+            .br {
+                border: 1px solid black;
+            }
+            table.ship-to tr td {
+                padding-top: 5px;
+                padding-bottom: 2px;
+                padding-left: 4px;
+                font-size: 11px;
+            }
+        </style>
+        <div class="rows">
+
+            <div class="cols-6">
+                <table class="ship-to br" width="100%" style="margin-left: 4px; border-collapse: collapse;">
+                    <tr class="br" style="background-color:#e5e7e9;">
+                        <td width="22%">
+                            <strong>Bill To</strong>
+                        </td>
+                        <td width="78%" colspan="2">:</td>
+                    </tr>
+                    <tr>
+                        <td width="22%">Address</td>
+                        <td width="6%">:</td>
+                        <td width="72%">
+                            <t t-if="o.partner_id">
+                                <strong style="margin-bottom: 3px">
+                                    <t t-esc="o.partner_id.name"/>
+                                </strong>
+                                <t t-if="o.partner_id.street">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.street"/>
+                                </t>
+                                <t t-if="o.partner_id.street2">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.street2"/>
+                                </t>
+                                <t t-if="o.partner_id.city and not o.partner_id.state_id">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.city"/>
+                                </t>
+                                <t t-elif="o.partner_id.state_id and not o.partner_id.city">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.state_id.name"/>
+                                </t>
+                                <t t-else="">
+                                </t>
+                                <t t-esc="o.partner_id.zip"/>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="22%">NPWP</td>
+                        <td width="6%">:</td>
+                        <td width="72%">
+                            <t t-esc="o.partner_id.vat"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="cols-6">
+                <table class="ship-to" width="78%" style="margin-left: 87px; border-collapse: collapse;">
+                    <tr class="br" style="background-color:#e5e7e9;">
+                        <td width="28%">
+                            <strong>Ship To</strong>
+                        </td>
+                        <td width="72%" colspan="2">:</td>
+                    </tr>
+                    <tr class="br">
+                        <td width="28%">Address</td>
+                        <td width="6%">:</td>
+                        <td width="66%">
+                            <t t-if="o.partner_id">
+                                <strong style="margin-bottom: 3px">
+                                    <t t-esc="o.partner_id.name"/>
+                                </strong>
+                                <t t-if="o.partner_id.street">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.street"/>
+                                </t>
+                                <t t-if="o.partner_id.street2">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.street2"/>
+                                </t>
+                                <t t-if="o.partner_id.city and not o.partner_id.state_id">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.city"/>
+                                </t>
+                                <t t-elif="o.partner_id.state_id and not o.partner_id.city">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.state_id.name"/>
+                                </t>
+                                <t t-else="">
+                                </t>
+                                <t t-esc="o.partner_id.zip"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </template>
+
+    <template id="inv_detail1" name="inv_detail1">
+        <style>
+                table.detail tr td, table.detail tr th {
+                    font-size: 11px;
+                    padding-top: 5px;
+                    padding-bottom: 2px;
+                    text-align: center;
+                }
+        </style>
+        <table class="detail" width="100%" style="margin-top: 10px; border-collapse: collapse;">
+            <tr style="background-color:#e5e7e9;">
+                <center>
+                    <td class="br">PO/SPK Number</td>
+                    <td class="br">Sales Person</td>
+                    <td class="br">Delivery Date</td>
+                    <td class="br">Terms</td>
+                    <td class="br">Due Date</td>
+                </center>
+            </tr>
+            <tr style="height: 28px;">
+                <td class="br" width="22%">
+                    <center>
+                        <t t-esc="o.invoice_line_ids.mapped('sale_line_ids.order_id.client_order_ref')[0] if o.invoice_line_ids.mapped('sale_line_ids.order_id.client_order_ref') else ''"/>
+                    </center>
+                </td>
+                <td class="br" width="23%">
+                    <center>
+                        <t t-esc="o.invoice_line_ids.mapped('sale_line_ids.order_id.user_id.name')[0] if o.invoice_line_ids.mapped('sale_line_ids.order_id.user_id.name') else ''"/>
+                    </center>
+                </td>
+                <td class="br" width="15%">
+                    <center>
+                        <!-- <t t-esc="o.invoice_line_ids.mapped('sale_line_ids.move_ids.picking_id.scheduled_date')[0] if o.invoice_line_ids.mapped('sale_line_ids.move_ids.picking_id.scheduled_date') else ''"/> -->
+                        <t t-set="scheduled_date" t-value="o.invoice_line_ids.mapped('sale_line_ids.move_ids.picking_id.scheduled_date')[0]"/>
+                        <t t-if="scheduled_date">
+                            <t t-esc="scheduled_date.strftime('%d-%b-%Y')"/>
+                        </t>
+                    </center>
+                </td>
+                <td class="br" width="15%">
+                    <center>
+                        <t t-if="o.invoice_payment_term_id">
+                            <t t-esc="o.invoice_payment_term_id.name"/>
+                        </t>
+                    </center>
+                </td>
+                <td class="br" width="20%">
+                    <center>
+                        <t t-esc="o.invoice_date_due"/>
+                    </center>
+                </td>
+            </tr>
+        </table>
+    </template>
+
+    <template id="inv_detail2" name="inv_detail2">
+        <table class="detail" width="100%" style="margin-top: 15px; border-collapse: collapse;">
+            <tr>
+                <td class="br" rowspan="2">No.</td>
+                <td class="br" rowspan="2">PN/FRU/Type Model</td>
+                <td class="br" rowspan="2">Description</td>
+                <td class="br" rowspan="2">QTY</td>
+                <td class="br">Unit Price</td>
+                <td class="br">Total Price</td>
+            </tr>
+            <tr>
+                <td class="br">(                    <t t-esc="o.currency_id.symbol"/>
+ )</td>
+                <td class="br">(                    <t t-esc="o.currency_id.symbol"/>
+ )</td>
+            </tr>
+            <t t-set="no" t-value="0"/>
+            <t t-foreach="o.invoice_line_ids" t-as="line">
+                <t t-set="no" t-value="no+1"/>
+                <tr>
+                    <td class="br" width="4%">
+                        <t t-esc="no"/>
+                    </td>
+                    <td class="br" width="10%">
+                        <t t-esc="line.product_id.default_code"/>
+                    </td>
+                    <td class="br" width="40%">
+                        <t t-esc="line.name"/>
+                    </td>
+                    <td class="br" width="4%">
+                        <t t-esc="line.quantity"/>
+                    </td>
+                    <td class="br" width="21%">
+                        <t t-esc="currency_symbol"/>
+                        <t t-esc="'{:,}'.format(int(line.price_unit))"/>
+                    </td>
+                    <td class="br" width="21%">
+                        <t t-esc="currency_symbol"/>
+                        <t t-esc="'{:,}'.format(int(line.price_subtotal))"/>
+                    </td>
+                </tr>
+            </t>
+        </table>
+    </template>
+
+    <template id="inv_detail3" name="inv_detail3">
+        <style>
+            table.detail3 tr td {
+                font-size: 11px;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                text-align: left;
+            }
+            table.detail3total tr td {
+                font-size: 11px;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                text-align: right;
+            }
+        </style>
+        <div class="rows">
+            <div >
+                <table class="detail3">
+                    <tr>
+                        <td>Bank's Details : (Full Amount)</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>
+                                <t t-esc="o.company_id.name"/>
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Bank Mandiri</td>
+                    </tr>
+                    <tr>
+                        <td>KCP Pramuka Jakarta</td>
+                    </tr>
+                    <tr>
+                        <td>A/C :167-0001571875 (IDR)</td>
+                    </tr>
+                </table>
+            </div>
+            <div style="margin-right: 39%;"></div>
+            <div style="margin-right: 9px;"></div>
+            <div style="width: 42%">
+                <table width="100%" class="detail3total">
+                    <tr>
+                        <td width="50%">Sub total</td>
+                        <td style="font-size: 11px;">
+                            <t t-esc="currency_symbol"/>
+                            <t t-esc="'{:,}'.format(int(o.amount_untaxed))"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tax 11%</td>
+                        <td style="font-size: 11px; border-bottom:1px solid black">
+                            <t t-esc="currency_symbol"/>
+                            <t t-esc="'{:,}'.format(int(o.amount_tax))"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Total</td>
+                        <td style="font-size: 11px; border-bottom:1px solid black">
+                            <t t-esc="currency_symbol"/>
+                            <t t-esc="'{:,}'.format(int(o.amount_total))"/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </template>
+
+    <template id="inv_footer" name="inv_footer">
+        <style>
+            table.inv_footer tr td {
+                font-size: 10px;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                text-align: left;
+            }
+            .rows {
+                display: -webkit-box; /* wkhtmltopdf uses this one */
+                display: -webkit-flex;
+                display: flex;
+            }
+            table.hormat tr td {
+                font-size: 11px;
+                text-align: center;
+            }
+        </style>
+        <div class="rows">
+            <div >
+                <table class="table-borderless inv_footer" style="height:100px">
+                    <tr>
+                        <td>Notes and Terms :</td>
+                    </tr>
+                    <tr>
+                        <td>* Payment by cheque should crossed and made payable to "<t t-esc="o.company_id.name.upper()"/>
+"</td>
+                    </tr>
+                    <tr>
+                        <td>* Penalty at the rate 3% per month will be charged on overdue account</td>
+                    </tr>
+                    <tr>
+                        <td>* For each customer data change request in invoice, (Name, NPWP &amp; Address)*</td>
+                    </tr>
+                    <tr>
+                        <td>can only be served with maximun period of 1(one) month receipt of invoice</td>
+                    </tr>
+                    <tr>
+                        <td>and attach a copy of NPWP refered to</td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-4"></div>
+            <div>
+                <table class="table-borderless hormat" width="100%">
+                    <tr>
+                        <td>
+                            Hormat Kami,
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            ( D. Annur Sofyan )
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <table style="width:100%" class="table-borderless text-center">
+            <tr style="border-bottom:1px solid black">
+                <td style="text-align:center; font-size: 10px; padding-bottom: 2px">
+                    <strong>Thank you for your bussiness !</strong>
+                </td>
+            </tr>
+        </table>
+        <style>
+            table.end-footer tr td {
+                font-size: 10px
+            }
+        </style>
+        <table width="40%" class="end-footer table-borderless">
+            <tr>
+                <td>White</td>
+                <td style="padding-left: 2px; padding-right:2px;"> : </td>
+                <td>fn-Customer, </td>
+                <td>Red</td>
+                <td style="padding-left: 2px; padding-right:2px;"> : </td>
+                <td>Accounting, </td>
+                <td>Yellow</td>
+                <td style="padding-left: 2px; padding-right:2px;"> : </td>
+                <td>Marketing Adm</td>
+            </tr>
+        </table>
+    </template>
+
+    <!-- Not in use, make sure in __manifest__.py this report is active. created by hafdiz -->
+    <template id="invoice_report">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+                <t t-set="currency_symbol" t-value="o.currency_id.symbol"/>
+                <div class="header">
+                    <t t-call="ab_report.inv_header"/>
+                </div>
+                <div class="page">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <!-- <br></br>
+                    <br></br> -->
+                    <t t-call="ab_report.inv_shipto_billto"/>
+                    <t t-call="ab_report.inv_detail1"/>
+                    <t t-call="ab_report.inv_detail2"/>
+                    <t t-call="ab_report.inv_detail3"/>
+                </div>
+
+                <div class="footer">
+                    <t t-call="ab_report.inv_footer"/>
+                </div>
+
+            </t>
+        </t>
+    </template>
+
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="action_report_delivery" model="ir.actions.report">
+        <field name="name">Delivery Order LUI</field>
+        <field name="model">stock.picking</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ab_report.delivery_order_report</field>
+        <field name="report_file">ab_report.delivery_order_report</field>
+        <field name="print_report_name">'%s' % (object.name)</field>
+        <field name="binding_model_id" ref="stock.model_stock_picking"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="ab_report.paperformat_half_a4_do"/>
+        <!-- is this paperformat must landscape or portrait? -->
+    </record>
+
+    <record id="action_purchase_order" model="ir.actions.report">
+        <field name="name">Purchase Order LUI</field>
+        <field name="model">purchase.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ab_report.purchase_order_report</field>
+        <field name="report_file">ab_report.purchase_order_report</field>
+        <field name="print_report_name">'%s' % (object.name)</field>
+        <field name="binding_model_id" ref="purchase.model_purchase_order"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="base.paperformat_euro"/>
+    </record>
+
+     <record id="action_report_patty_cash" model="ir.actions.report">
+        <field name="name">Petty Cash LUI</field>
+        <field name="model">account.bank.statement.line</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">ab_report.patty_cash_line_report</field>
+        <field name="report_file">ab_report.patty_cash_line_report</field>
+        <field name="print_report_name">'%s' % (object.name)</field>
+        <field name="binding_model_id" ref="account.model_account_bank_statement_line"/>
+        <field name="binding_type">report</field>
+        <field name="paperformat_id" ref="ab_report.paperformat_half_a4_portrait"/>        
+    </record>
+
+
+
+</odoo>

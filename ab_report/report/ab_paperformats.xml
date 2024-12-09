@@ -1,0 +1,37 @@
+<odoo>
+  <data>
+
+    <record id="paperformat_half_a4_do" model="report.paperformat">
+      <field name="name">Half A4 Delivery Order</field>
+      <field name="default" eval="True"/>
+      <field name="format">custom</field>
+      <field name="page_height">210</field>
+      <field name="page_width">148</field>
+      <field name="orientation">Landscape</field>
+      <field name="margin_top">8</field>
+      <field name="margin_bottom">36</field>
+      <field name="margin_left">3</field>
+      <field name="margin_right">3</field>
+      <field name="header_line" eval="False"/>
+      <field name="header_spacing">3</field>
+      <field name="dpi">85</field>
+    </record>
+
+    <record id="paperformat_half_a4_portrait" model="report.paperformat">
+      <field name="name">Half A4</field>
+      <field name="default" eval="True"/>
+      <field name="format">custom</field>
+      <field name="page_height">210</field>
+      <field name="page_width">148</field>
+      <field name="orientation">Portrait</field>
+      <field name="margin_top">8</field>
+      <field name="margin_bottom">36</field>
+      <field name="margin_left">3</field>
+      <field name="margin_right">3</field>
+      <field name="header_line" eval="False"/>
+      <field name="header_spacing">3</field>
+      <field name="dpi">85</field>
+    </record>
+
+  </data>
+</odoo>

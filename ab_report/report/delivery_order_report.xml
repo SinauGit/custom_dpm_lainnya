@@ -1,0 +1,421 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="do_header">
+        <style>
+        table.kop_do tr td, table.kop-pt tr td {
+            padding-top: 3px;
+            padding-bottom: 3px;
+            padding-left: 3px;
+        }
+        table.kop_do tr, table.kop-pt tr {
+            font-size: 12px
+        }
+        </style>
+        <div class="row">
+            <div class="col-1">
+                <img class="mt-2" t-if="o.env.company.logo" t-att-src="image_data_uri(o.env.company.logo)" width="140%"/>
+            </div>
+            <div class="col-5">
+                <table style="margin-left: 30px;" width="100%" class="kop-pt table-borderless">
+                    <tr>
+                        <td colspan="3">
+                            <strong style="font-size: 18px;">
+                                <t t-esc="o.company_id.name"/>
+                            </strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="100%">
+                            <t t-if="o.env.company">
+                                <t t-if="o.env.company.street">
+                                    <t t-esc="o.env.company.street"/>
+                                </t>
+                                <t t-if="o.env.company.street2">
+                                    <br></br>
+                                    <span>
+                                        <t t-esc="o.env.company.street2"/>
+                                    </span>
+                                </t>
+                                <t t-if="o.env.company.city and not o.env.company.state_id">
+                                    <br></br>
+                                    <span>
+                                        <t t-esc="o.env.company.city"/>
+                                    </span>
+
+                                </t>
+                                <t t-elif="o.env.company.state_id and not o.env.company.city">
+                                    <br></br>
+                                    <span>
+                                        <t t-esc="o.env.company.state_id.name"/>
+                                    </span>
+                                </t>
+                                <t t-else="">
+                                    <br></br>
+                                    <span>
+                                        <t t-esc="o.env.company.city"/>
+                                    </span>
+                                </t>
+                                <t t-if="o.env.company.zip">
+                                    <span>
+                                        <t t-esc="o.env.company.zip"/>
+                                    </span>
+                                </t>
+                                <t t-if="o.env.company.phone">
+                                    <br></br>
+                                    <span>Telp.
+                                        <t t-esc="o.env.company.phone"/>
+                                    </span>
+                                </t>
+
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <div class="col-5 offset-1">
+                <table class="kop_do table-borderless" width="95%" style="margin-left: 20px">
+                    <tr style="font-size:18px;">
+                        <th colspan="3" style="background-color:#e5e7e9; padding-top: 2px;">
+                            <center style="vertical-align: baseline;">
+                                <strong>
+                                DELIVERY ORDER
+                                </strong>
+                            </center>
+                        </th>
+                    </tr>
+                    <tr height="10px"></tr>
+                    <tr>
+                        <td width="30%">Sales</td>
+                        <td width="5%">:</td>
+                        <td width="70%">
+                            <t t-if="o.sale_id.user_id">
+                                <t t-esc="o.sale_id.user_id.name"/>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="30%">Do. No.</td>
+                        <td width="5%">:</td>
+                        <td width="70%">
+                            <t t-esc="o.name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="30%">PO Cust. Date</td>
+                        <td width="5%">:</td>
+                        <td width="70%">
+                            <t t-if="o.sale_id">
+                                <t t-esc="o.sale_id.date_order.strftime('%d-%b-%Y')"/>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="30%">PO Cust. No.</td>
+                        <td width="5%">:</td>
+                        <td width="70%">
+                            <t t-if="o.sale_id.client_order_ref">
+                                <t t-esc="o.sale_id.client_order_ref"/>
+                            </t>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td width="30%">SO LUI</td>
+                        <td width="5%">:</td>
+                        <td width="70%">
+                            <t t-if="o.sale_id.name">
+                                <t t-esc="o.sale_id.name"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+    </template>
+
+    <template id="do_shipto" name="do_shipto">
+        <style>
+            .cols-6 {
+                -webkit-box-flex: 1;
+                -webkit-flex: 1;
+                flex: 1;
+            }
+            .rows {
+                display: -webkit-box; /* wkhtmltopdf uses this one */
+                display: -webkit-flex;
+                display: flex;
+            }
+            .br {
+                border: 1px solid black;
+            }
+            table.ship-to tr td {
+                padding-top: 5px;
+                padding-bottom: 4px;
+                padding-left: 4px;
+                font-size: 12px;
+            }
+        </style>
+        <div class="rows">
+
+            <div style="margin-right: 60%">
+            </div>
+            <!-- <div class="cols-6">
+                <table class="ship-to" width="97%" style="margin-left: 4px; margin-right: 30px; border-collapse: collapse;">
+                    <tr>
+                        <td class="br" style="background-color:#e5e7e9;">
+                            <strong>Ship To:</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="br">
+                            <t t-if="o.partner_id">
+                                <strong style="margin-bottom: 3px">
+                                    <t t-esc="o.partner_id.name"/>
+                                </strong>
+                                <t t-if="o.partner_id.street">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.street"/>
+
+                                </t>
+                                <t t-if="o.partner_id.street2">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.street2"/>
+                                </t>
+
+                                <t t-if="o.partner_id.city and not o.partner_id.state_id">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.city"/>
+                                </t>
+                                <t t-elif="o.partner_id.state_id and not o.partner_id.city">
+                                    <br></br>
+                                    <t t-esc="o.partner_id.state_id.name"/>
+                                </t>
+                                <t t-else="">
+                                </t>
+                                <t t-esc="o.partner_id.zip"/>
+                            </t>
+                        </td>
+                    </tr>
+                </table>
+            </div> -->
+        </div>
+
+    </template>
+
+
+    <template id="do_detail" name="do_detail">
+        <style>
+                table.detail tr td {
+                    font-size: 12px;
+                    padding-top: 5px;
+                    padding-bottom: 4px;
+                    text-align: center;
+                    vertical-align: middle;
+                }
+                table.detail tr center strong td {
+                    font-size: 12px;
+                    padding-top: 5x;
+                    padding-bottom: 4px;
+                    text-align: center;
+                    vertical-align: middle;
+                    font-weight: ;
+                }
+                .border { border: 1px solid; }
+                                                                                                                                                                                        <!-- .py {
+                    padding-bottom: 3px; padding-top: 3px
+                } -->
+        </style>
+        <table class="detail" width="100%" style="margin-top: 15px; border-collapse: collapse;">
+            <tr style="background-color:#e5e7e9;">
+                <center>
+                    <td class="py border">
+                        <strong>No</strong>
+                    </td>
+                    <td class="py border">
+                        <strong>Type Model</strong>
+                    </td>
+                    <td class="py border">
+                        <strong>Description</strong>
+                    </td>
+                    <td class="py border">
+                        <strong>Qty</strong>
+                    </td>
+                    <td class="py border">
+                        <strong>Serial Number</strong>
+                    </td>
+                </center>
+            </tr>
+            <t t-set="no" t-value="0"/>
+            <!-- <t t-set="product_list" t-value="[]"/> -->
+            <t t-foreach="o.move_line_ids" t-as="line">
+                <t t-set="no" t-value="no+1"/>
+                <tr style="height: 28px;">
+                    <td class="border" width="5%">
+                        <center>
+                            <t t-esc="no"/>
+                        </center>
+                    </td>
+                    <td class="border" width="15%">
+                        <center>
+                            <t t-esc="line.product_id.default_code"/>
+                        </center>
+                    </td>
+                    <td class="border" width="50%">
+                        <t t-esc="line.product_id.name"/>
+                    </td>
+                    <td class="border" width="7%">
+                        <center>
+                            <t t-esc="int(line.qty_done)"/>
+                        </center>
+                    </td>
+                    <td class="border" width="18%">
+                        <center>
+                            <t t-if="line.lot_id">
+                                <t t-esc="line.lot_id.name"/>
+                            </t>
+                        </center>
+                    </td>
+                </tr>
+            </t>
+        </table>
+
+    </template>
+
+    <template id="do_footer" name="do_footer">
+        <style>
+            table, tr, td, th { font-size: 12px; border: none; }
+        </style>
+        <!-- table-borderless berguna ketika menggunakan footer bs5 -->
+        <table class='table-borderless' width="100%" style="margin-top: 30px;">
+            <tr>
+                <td colspan="6">
+                </td>
+                <td>
+                    <center>
+                        <!-- <t t-if="o.partner_id.state_id and o.date_done">
+                            <t t-esc="o.partner_id.state_id.name"/>
+,
+                        </t>
+                        <t t-elif="o.partner_id.state_id">
+                            <t t-esc="o.partner_id.state_id.name"/>
+                        </t>
+                        <t t-else="not o.partner_id.state_id">
+                        </t> -->
+                        <t t-if="o.scheduled_date">
+                            <t t-esc="o.scheduled_date.strftime('%d %B %Y')"/>
+                        </t>
+                    </center>
+                </td>
+            </tr>
+            <tr>
+                <td width="25%">
+                    <center>Request By</center>
+                </td>
+                <td width="3%" rowspan="3"></td>
+                <td width="20%">
+                    <center>Prepared By</center>
+                </td>
+                <td width="3%" rowspan="3"></td>
+                <td width="20%">
+                    <center>Delivered By</center>
+                </td>
+                <td width="3%" rowspan="3"></td>
+                <td width="25%">
+                    <center>Received By</center>
+                </td>
+            </tr>
+            <tr style="height: 10%;">
+                <td>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td>
+                    <br></br>
+                    <div style="border-bottom: 1px solid black" width="25%"></div>
+                </td>
+                <td>
+                    <br></br>
+                    <div style="border-bottom: 1px solid black" width="25%"></div>
+                </td>
+                <td>
+                    <br></br>
+                    <div style="border-bottom: 1px solid black" width="25%"></div>
+
+                </td>
+                <td>
+                    <br></br>
+                    <div style="border-bottom: 1px solid black" width="25%"></div>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td colspan="5"></td>
+                <td>(Paraf, Nama Jelas &amp; Cap Perusahaan)</td>
+            </tr>
+        </table>
+
+        <table class='table-borderless' style="margin-top: 10px; margin-left: auto; margin-right: auto;" width="72%">
+            <tr>
+                <td>White</td>
+                <td>:</td>
+                <td>Fn-Customer</td>
+                <td>Red</td>
+                <td>:</td>
+                <td>Accounting</td>
+                <td>Yellow</td>
+                <td>:</td>
+                <td>Marketing Adm</td>
+                <td>Green</td>
+                <td>:</td>
+                <td>Warehouse</td>
+                <td>Blue</td>
+                <td>:</td>
+                <td>Customer</td>
+            </tr>
+        </table>
+    </template>
+
+
+    <template id="delivery_order_report">
+
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="o">
+
+                <div class="header">
+                    <t t-call="ab_report.do_header"/>
+                </div>
+
+                <div class="page">
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <br></br>
+                    <!-- <br></br> -->
+                    <br></br>
+                    <t t-call="ab_report.do_shipto" />
+                    <t t-call="ab_report.do_detail"/>
+                </div>
+
+
+                <div class="footer">
+                    <t t-call="ab_report.do_footer"/>
+                </div>
+
+
+            </t>
+        </t>
+
+    </template>
+</odoo>

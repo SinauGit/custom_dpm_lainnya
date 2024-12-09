@@ -1,0 +1,185 @@
+<data noupdate="0">
+    <!-- Add you code here -->
+
+    <record id="sequence_patty_cash" model="ir.sequence">
+        <field name="name">Patty Cash Sequence</field>
+        <field name="code">patty.cash.seq</field>
+        <field name="prefix">kode_journal-</field>
+        <!-- <field name="suffix">/%(month)s/%(y)s</field> -->
+        <field name="padding">4</field>
+        <field name="number_next_actual">1</field>
+        <field name="number_increment">1</field>
+    </record>
+
+
+
+
+    <template id="patty_cash_header" name="patty_cash_header">
+        <div class="header">
+            <table class="table-borderless">
+                <tr>
+                    <td>
+                        <img class="mt-4" t-if="s.env.company.logo" t-att-src="image_data_uri(s.env.company.logo)" width="100%"/>
+                    </td>
+                    <td>
+                        <strong style="font-size: 18px;">
+                            <t t-esc="s.company_id.name"/>
+                        </strong>
+                        <br/>
+                        IT Solution
+                    </td>
+                </tr>
+            </table>
+
+        </div>
+    </template>
+
+
+
+
+    <template id="patty_cash_page" name="patty_cash_page">
+        <style>
+                table tr {
+                    font-size: 15px;
+                }
+                table.desc tr td {
+                    padding: 0; 
+                    margin: 0;
+                }
+                .br {
+                    border: 1px solid black;
+                }
+        </style>
+
+        <br></br>
+        <div class="page">
+            <p class="text-center">
+                <h2 class="text-center">Bukti Transaksi <span t-esc="s.journal_id.name"/>
+                </h2>
+            </p>
+
+            <table class="table table-borderless">
+                <tr>
+                    <td width="70%"/>
+                    <td>Nomor</td>
+                    <td>: <span t-esc="s.number"/></td>
+                </tr>
+                <tr>
+                    <td/>
+                    <td>Tanggal</td>
+                    <td>: <span t-esc="s.date"/>
+                    </td>
+                </tr>
+            </table>
+
+            <table class="table table-borderless" width="100%">
+                <tr>
+                    <td width="30%">Dibayarkan Kepada</td>
+                    <td>: <span t-esc="s.line_ids[0].partner_id.name"/>
+                    </td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>Sebesar</td>
+                    <td>: <span t-esc="s.total_amount" t-options='{"widget": "monetary", "display_currency": s.currency_id}'/>
+                    </td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>Terbilang</td>
+                    <td>: <span t-esc="s.terbilang(s.total_amount)"/>
+                    </td>
+                    <td/>
+                </tr>
+                <tr>
+                    <td>Untuk Keperluan</td>
+                    <td>: <span t-esc="s.name"/>
+                    </td>
+                    <td width="20%">
+                        <span t-esc="s.total_amount" t-options='{"widget": "monetary", "display_currency": s.currency_id}'/>
+                    </td>
+                </tr>
+                <tr>
+                    <td/>
+                    <td class="text-end">Total</td>
+                    <td>
+                        <span t-esc="s.total_amount" t-options='{"widget": "monetary", "display_currency": s.currency_id}'/>
+                    </td>
+                </tr>
+            </table>
+
+
+            <br/>
+            <div id='tanda_tangan'>
+                <table class="table-borderless" width="100%" style="text-align:center;page-break-inside:avoid">
+                    <tr >
+                        <td style="text-align:center;" width="33.33%">                            
+                            Dikeluarkan,
+                        </td>
+                        <td style="text-align:center;" width="33.33%">Diterima,</td>
+                        <td style="text-align:center;" width="33.33%">Dibukukan,</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align:center;">
+
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <u>
+                                ...........
+                            </u>
+                        </td>
+                        <td style="text-align:center;">
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <u>
+                                    ...........
+                            </u>
+                        </td>
+                        <td style="text-align:center;">
+                            <br/>
+                            <br/>
+                            <br/>
+                            <br/>
+                            <u>
+                                    ...........
+                            </u>
+                        </td>
+                    </tr>
+                </table>
+
+            </div>
+
+        </div>
+    </template>
+    <template id="patty_cash_report">
+        <t t-call="web.basic_layout">
+            <t t-foreach="docs" t-as="s">
+                <t t-set="currency_symbol" t-value="s.currency_id.symbol"/>
+                <style>
+                        .cols-6 {
+                            -webkit-box-flex: 1;
+                            -webkit-flex: 1;
+                            flex: 1;
+                        }
+                        .rows {
+                            display: -webkit-box; /* wkhtmltopdf uses this one */
+                            display: -webkit-flex;
+                            display: flex;
+                        }
+                        table.align-top, table.align-top tr, table.align-top tr td {
+                          vertical-align: top;
+                        }
+                </style>
+
+                <t t-call="ab_report.patty_cash_header"/>
+                <t t-call="ab_report.patty_cash_page"/>
+                <!-- <t t-call="ab_report.po_footer"/> -->
+
+            </t>
+        </t>
+    </template>
+</data>
