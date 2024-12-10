@@ -98,12 +98,14 @@
                                                 <!-- Memperbaiki pemanggilan ukuran produk -->
                                                 <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Size').value_ids.mapped('name')) or 'L'" style="font-weight: bold;"/>
                                             </td>
-                                            <td class="text-center" style="font-weight: bold;"><span t-esc="line.quantity" style="font-weight: bold;"/></td>
+                                            <td class="text-center" style="font-weight: bold;">
+                                                <span t-esc="'%.2f' % line.quantity" style="font-weight: bold;"/>
+                                            </td>
                                             <td class="text-center" style="font-weight: bold;">
                                                 <span t-esc="line.price_unit or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
-                                                <span t-esc="line.discount or 0.0" style="font-weight: bold;"/>
+                                                <span t-esc="'%.2f' % (line.discount or 0.00)" style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
                                                 <span t-esc="line.discount_fixed or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
