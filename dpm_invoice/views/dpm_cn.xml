@@ -50,7 +50,7 @@
                                     <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><strong>Telephone:</strong> <span t-esc="o.partner_id.phone or ''" style="font-weight: bold;"/></p>
                                 </div>
                             </div>
-                            <br/>
+                            <br/>  
                             <div class="row" style="margin-bottom: 5px;">
                                 <div class="col-12">
                                     <p style="font-weight: bold; margin-bottom: 2px;">
@@ -64,7 +64,6 @@
                                         <span t-esc="o.note or ''" style="font-weight: bold;"/>
                                     </p>
                                 </div>
-                            </div>
                             </div>
                             <br/>
                             <!-- TABLE -->
