@@ -185,18 +185,5 @@
                 <t t-call="dpm_invoice_template" t-lang="lang"/>
             </t>
         </template>
-
-        <style>
-            .remarks-line {
-                display: flex !important;
-                flex-direction: row !important;
-                flex-wrap: nowrap !important;
-                align-items: center !important;
-            }
-            .remarks-line > * {
-                flex-shrink: 0;
-                white-space: pre-wrap;
-            }
-        </style>
     </data>
 </odoo>
