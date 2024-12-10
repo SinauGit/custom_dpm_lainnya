@@ -22,7 +22,7 @@
                                     <span t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')" style="font-weight: bold;"/>
                                     <span t-else="">-</span></p>
                                     <p style="font-weight: bold; margin-bottom: 2px;"><strong>Tanggal JT:</strong> <span t-esc="o.invoice_date_due.strftime('%d.%m.%y') or ''" style="font-weight: bold;"/></p>
-                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>Salesman:</strong> <span t-esc="o.invoice_user_id.name" style="font-weight: bold;"/></p>
+                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>Salesman:</strong> <span t-esc="o.employee_id.name or '-'"  style="font-weight: bold;"/></p>
                                 </div>
                                 <div class="col-6 text-right">
                                     <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><strong>Cust No. :</strong> <span t-esc="o.partner_id.ref or o.partner_id.id" style="font-weight: bold;"/></p>
