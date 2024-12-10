@@ -61,7 +61,7 @@
                                         <t t-set="picking" t-value="env['stock.picking'].search([('sale_id.name', '=', o.invoice_origin), ('state', '=', 'done')], limit=1)"/>
                                         <span t-esc="picking.name or 'No-Delivery'" style="font-weight: bold;"/>.
                                         <br/>
-                                        <span t-esc="o.note or ''" style="font-weight: bold;"/>
+                                        <span t-esc="o.narration or ''" style="font-weight: bold;"/>
                                     </p>
                                 </div>
                             </div>
