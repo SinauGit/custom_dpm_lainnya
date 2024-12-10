@@ -31,7 +31,7 @@
                                     <p style="font-weight: bold; margin-bottom: 2px;">
                                         <strong style="display: inline-block; width: 80px;">Due Date</strong>
                                         <strong>:</strong>
-                                        <span t-esc="o.invoice_date_due.strftime('%d.%m.%y') or ''" style="font-weight: bold;"/>
+                                        <span t-esc="o.invoice_date_due.strftime('%d.%m.%y') or '-'" style="font-weight: bold;"/>
                                     </p>
                                     <p style="font-weight: bold; margin-bottom: 2px;">
                                         <strong style="display: inline-block; width: 80px;">Salesman</strong>
