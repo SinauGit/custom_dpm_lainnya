@@ -68,8 +68,8 @@
                                 <div class="col-12">
                                     <p class="remarks-line" style="font-weight: bold; margin-bottom: 2px;">
                                         <strong>Remarks:</strong>
-                                        <t t-set="clean_narration" t-value="(o.narration or '').replace('\n', ' ').replace('\r', ' ')"/>
-                                        <span t-esc="clean_narration" style="font-weight: bold; display: inline;"/>
+                                        <t t-set="clean_narration" t-value="(o.narration or '').replace('\n', ' ').replace('\r', ' ').replace('<br>', ' ').replace('<p>', '').replace('</p>', ' ')"/>
+                                        <span t-raw="clean_narration" style="font-weight: bold; display: inline;"/>
                                         <span style="display: inline;"> On Sales Orders </span>
                                         <span t-esc="o.invoice_origin or 'No-Sales Order'" style="font-weight: bold; display: inline;"/>
                                         <span style="display: inline;">. Based On Deliveries No. </span>
