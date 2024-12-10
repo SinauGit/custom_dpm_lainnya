@@ -53,14 +53,15 @@
                             <br/>
                             <div class="row" style="margin-bottom: 5px;">
                                 <div class="col-12">
-                                    <p style="font-weight: bold; margin-bottom: 2px; white-space: nowrap; display: inline-block;">
+                                    <p class="remarks-line" style="font-weight: bold; margin-bottom: 2px;">
                                         <strong>Remarks:</strong>
-                                        <span t-esc="o.narration or ''" style="font-weight: bold; display: inline-block;"/>
-                                        <span style="display: inline-block;"> On Sales Orders </span>
-                                        <span t-esc="o.invoice_origin or 'No-Sales Order'" style="font-weight: bold; display: inline-block;"/>
-                                        <span style="display: inline-block;">. Based On Deliveries No. </span>
+                                        <t t-set="clean_narration" t-value="(o.narration or '').replace('\n', ' ').replace('\r', ' ')"/>
+                                        <span t-esc="clean_narration" style="font-weight: bold; display: inline;"/>
+                                        <span style="display: inline;"> On Sales Orders </span>
+                                        <span t-esc="o.invoice_origin or 'No-Sales Order'" style="font-weight: bold; display: inline;"/>
+                                        <span style="display: inline;">. Based On Deliveries No. </span>
                                         <t t-set="picking" t-value="env['stock.picking'].search([('sale_id.name', '=', o.invoice_origin), ('state', '=', 'done')], limit=1)"/>
-                                        <span t-esc="picking.name or 'No-Delivery'" style="font-weight: bold; display: inline-block;"/>
+                                        <span t-esc="picking.name or 'No-Delivery'" style="font-weight: bold; display: inline;"/>
                                         <span>.</span>
                                     </p>
                                 </div>
@@ -185,5 +186,18 @@
                 <t t-call="dpm_invoice_template" t-lang="lang"/>
             </t>
         </template>
+
+        <style>
+            .remarks-line {
+                display: flex !important;
+                flex-direction: row !important;
+                flex-wrap: nowrap !important;
+                align-items: center !important;
+            }
+            .remarks-line > * {
+                flex-shrink: 0;
+                white-space: pre-wrap;
+            }
+        </style>
     </data>
 </odoo>
