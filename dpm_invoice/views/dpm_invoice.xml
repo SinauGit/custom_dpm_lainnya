@@ -3,6 +3,19 @@
     <data>
         <!-- Template QWeb -->
         <template id="dpm_invoice_template">
+            <style>
+                .remarks-line {
+                    display: flex !important;
+                    flex-direction: row !important;
+                    flex-wrap: nowrap !important;
+                    align-items: center !important;
+                }
+                .remarks-line > * {
+                    flex-shrink: 0;
+                    white-space: pre-wrap;
+                }
+            </style>
+            
             <t t-call="web.external_layout">
                 <t t-foreach="docs" t-as="o">
                     <!-- Language and Page Information in Header -->
@@ -186,18 +199,5 @@
                 <t t-call="dpm_invoice_template" t-lang="lang"/>
             </t>
         </template>
-
-        <style>
-            .remarks-line {
-                display: flex !important;
-                flex-direction: row !important;
-                flex-wrap: nowrap !important;
-                align-items: center !important;
-            }
-            .remarks-line > * {
-                flex-shrink: 0;
-                white-space: pre-wrap;
-            }
-        </style>
     </data>
 </odoo>
