@@ -55,7 +55,7 @@
                                 <div class="col-12">
                                     <p style="font-weight: bold; margin-bottom: 2px;">
                                         <strong>Remarks:</strong> 
-                                        <span t-esc="o.narration or ''" style="font-weight: bold;"/> On Sales Orders 
+                                        <span t-esc="o.narration or ''" style="font-weight: bold;"/>. On Sales Orders 
                                         <span t-esc="o.invoice_origin or 'No-Sales Order'" style="font-weight: bold;"/>. 
                                         Based On Deliveries No. 
                                         <t t-set="picking" t-value="env['stock.picking'].search([('sale_id.name', '=', o.invoice_origin), ('state', '=', 'done')], limit=1)"/>
