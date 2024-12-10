@@ -8,7 +8,7 @@
                     <!-- Language and Page Information in Header -->
                     <div class="row" style="margin-bottom: 5px;">
                         <div class="text-center">
-                            <span style="font-weight: bold; font-size: 125%;"><strong>FAKTUR PENJUALAN</strong></span>
+                            <span style="font-weight: bold; font-size: 125%;"><strong>INVOICE</strong></span>
                         </div>
                     </div>
                     <br/>
@@ -17,12 +17,27 @@
                             <!-- HEADER -->
                             <div class="row" style="margin-bottom: 5px;">
                                 <div class="col-6 text-left">
-                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>No Faktur:</strong> <span t-esc="o.name" style="font-weight: bold;"/></p>
-                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>Tanggal:</strong>
-                                    <span t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')" style="font-weight: bold;"/>
-                                    <span t-else="">-</span></p>
-                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>Tanggal JT:</strong> <span t-esc="o.invoice_date_due.strftime('%d.%m.%y') or ''" style="font-weight: bold;"/></p>
-                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>Salesman:</strong> <span t-esc="o.invoice_user_id.name" style="font-weight: bold;"/></p>
+                                    <p style="font-weight: bold; margin-bottom: 2px;">
+                                        <strong style="display: inline-block; width: 80px;">No</strong>
+                                        <strong>:</strong>
+                                        <span t-esc="o.name" style="font-weight: bold;"/>
+                                    </p>
+                                    <p style="font-weight: bold; margin-bottom: 2px;">
+                                        <strong style="display: inline-block; width: 80px;">Date</strong>
+                                        <strong>:</strong>
+                                        <span t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')" style="font-weight: bold;"/>
+                                        <span t-else="">-</span>
+                                    </p>
+                                    <p style="font-weight: bold; margin-bottom: 2px;">
+                                        <strong style="display: inline-block; width: 80px;">Due Date</strong>
+                                        <strong>:</strong>
+                                        <span t-esc="o.invoice_date_due.strftime('%d.%m.%y') or ''" style="font-weight: bold;"/>
+                                    </p>
+                                    <p style="font-weight: bold; margin-bottom: 2px;">
+                                        <strong style="display: inline-block; width: 80px;">Salesman</strong>
+                                        <strong>:</strong>
+                                        <span t-esc="o.employee_id.name or '-'" style="font-weight: bold;"/>
+                                    </p>
                                 </div>
                                 <div class="col-6 text-right">
                                     <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><strong>Cust No. :</strong> <span t-esc="o.partner_id.ref or o.partner_id.id" style="font-weight: bold;"/></p>
@@ -38,9 +53,11 @@
                             <br/>
                             <div class="row" style="margin-bottom: 5px;">
                                 <div class="col-12">
-                                    <p style="font-weight: bold; margin-bottom: 2px;"><strong>Remarks:</strong> 
-                                         Office Furniture - Incl Case Based On Sales Orders <span t-esc="o.invoice_origin or ''" style="font-weight: bold;"/>. 
-                                        Based On Deliveries ID <span t-esc="o.id or ''" style="font-weight: bold;"/>.
+                                    <p style="font-weight: bold; margin-bottom: 2px;">
+                                        <strong>Remarks:</strong> 
+                                        <span t-esc="o.brand or ''" style="font-weight: bold;"/> - Incl Case Based On Sales Orders 
+                                        <span t-esc="o.invoice_origin or ''" style="font-weight: bold;"/>. 
+                                        Based On Deliveries No. <span t-esc="o.delivery_no or ''" style="font-weight: bold;"/>.
                                     </p>
                                 </div>
                             </div>
@@ -50,15 +67,15 @@
                                 <thead>
                                     <tr>
                                         <th style="font-weight: bold;">No</th>
-                                        <th style="font-weight: bold;">Brand</th>
-                                        <th style="font-weight: bold;">Model</th>
+                                        <th style="font-weight: bold;">Brand - Model</th>
+                                        <!-- <th style="font-weight: bold;">Model</th> -->
                                         <th style="font-weight: bold;">Color</th>
                                         <th style="font-weight: bold;">Size</th>
                                         <th style="font-weight: bold;">Qty</th>
-                                        <th style="font-weight: bold;">Hrg Satuan</th>
+                                        <th style="font-weight: bold;">Unit Price</th>
                                         <th style="font-weight: bold;">Disc (%)</th>
                                         <th style="font-weight: bold;">Disc (Amount)</th>
-                                        <th style="font-weight: bold;">Jumlah</th>
+                                        <th style="font-weight: bold;">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -69,8 +86,8 @@
                                         <t t-set="counter" t-value="counter + 1"/>
                                         <tr>
                                             <td class="text-center" style="font-weight: bold;"><span t-esc="counter" style="font-weight: bold;"/></td>
-                                            <td class="text-center" style="font-weight: bold;"><span t-esc="line.product_id.product_tmpl_id.categ_id.name or ''" style="font-weight: bold;"/></td>
-                                            <td class="text-center" style="font-weight: bold;"><span t-esc="line.product_id.default_code or ''" style="font-weight: bold;"/></td>
+                                            <td class="text-center" style="font-weight: bold;"><span t-esc="line.product_id.name or 'No Brand - Model'" style="font-weight: bold;"/></td>
+                                            <!-- <td class="text-center" style="font-weight: bold;"><span t-esc="line.product_id.default_code or ''" style="font-weight: bold;"/></td> -->
                                             <td class="text-center" style="font-weight: bold;">
                                                 <!-- Memperbaiki pemanggilan warna produk -->
                                                 <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Color').value_ids.mapped('name')) or 'Hitam'" style="font-weight: bold;"/>
@@ -108,42 +125,43 @@
                                     <table class="table table-sm table-borderless mb-0" style="margin-bottom: 5px;">
                                         <!-- Total Gross -->
                                         <tr>
-                                            <td><strong>Total Gross</strong></td>
+                                            <td><strong>Subtotal</strong></td>
                                             <td class="text-end">
                                                 <span t-esc="sum(line.price_unit for line in o.invoice_line_ids) or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
                                             </td>
                                         </tr>
                                         <!-- Discount -->
                                         <tr>
-                                            <td><strong>Total Discount</strong></td>
+                                            <td><strong>Discount</strong></td>
                                             <td class="text-end">
                                                 <span t-esc="sum(line.discount_fixed for line in o.invoice_line_ids) or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
                                             </td>
                                         </tr>
                                         <!-- Biaya Kirim -->
                                         <tr>
-                                            <td><strong>Biaya Kirim</strong></td>
+                                            <td><strong>Shipping</strong></td>
                                             <td class="text-end">
                                                 <!-- <span t-esc="int(o.delivery_cost or 0)" style="font-weight: bold; margin-right: 20px;"/> -->
                                             </td>
                                         </tr>
                                         <!-- Total Jumlah -->
                                         <tr>
-                                            <td><strong>Total Jumlah</strong></td>
+                                            <td><strong>Total </strong></td>
                                             <td class="text-end">
                                                 <span t-esc="o.amount_total or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
                                             </td>
                                         </tr>
-                                    </table>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <br/>
-                                    <p>Signature <span t-esc="o.partner_id.name" style="font-weight: bold;"/> Date 
-                                    <span t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')" style="font-weight: bold;"/>
-                                    <span t-else="">-</span></p>
+                                       </table>
                                 </div>
                             </div>
+                                <footer>
+                                    <div style="position: relative; width: 100%; text-align: right; margin-top: 80px; margin-bottom: 10px; margin-right: 20px;">
+                                        <strong>Signature</strong>
+                                        <span style="border-bottom: 1px solid black; width: 150px; display: inline-block; margin-right: 20px;"></span>
+                                        <strong>Date</strong>
+                                        <span style="border-bottom: 1px solid black; width: 150px; display: inline-block;"></span>
+                                    </div>
+                                </footer>
                         </div>
                     </main>
                 </t>
