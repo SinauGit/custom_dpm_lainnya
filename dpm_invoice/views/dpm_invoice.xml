@@ -95,8 +95,7 @@
                                     <p class="mb-2"><strong>Cust No. :</strong> <span class="dpm-value" t-esc="o.partner_id.ref or o.partner_id.id" style="font-weight: bold;"/></p>
                                     <p class="mb-2"><span class="dpm-value" t-esc="o.partner_id.name or ''" style="font-weight: bold;"/></p>
                                     <p class="mb-2">
-                                        <span class="dpm-value" t-esc="o.partner_id.stre
-                                        font-weight: bold;"/><br/>
+                                        <span class="dpm-value" t-esc="o.partner_id.street or ''" style="font-weight: bold;"/><br/>
                                         <span class="dpm-value" t-esc="o.partner_id.city or ''" style="font-weight: bold;"/><span>, </span>
                                         <span class="dpm-value" t-esc="o.partner_id.country_id.name or ''" style="font-weight: bold;"/>
                                     </p>
