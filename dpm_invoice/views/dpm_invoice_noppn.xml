@@ -3,13 +3,13 @@
     <data>
         <!-- Template QWeb -->
         <template id="my_invoice_noppn_template">
-            <style>
+                        <style>
                 /* Font Styles untuk Dot Matrix Printer */
                 .dpm-font {
                     font-family: "Courier New", Courier, monospace;
                 }
                 .dpm-header {
-                    font-size: 14px;
+                    font-size: 24.5px;
                     font-weight: normal;
                     text-align: center;
                 }
@@ -17,25 +17,40 @@
                     font-weight: normal;
                     width: 80px;
                     display: inline-block;
-                    font-size: 12px;
+                    font-size: 18px;
                 }
                 .dpm-value {
                     font-weight: normal;
-                    font-size: 12px;
+                    font-size: 18px;
                 }
                 .dpm-table-header {
                     font-weight: normal;
-                    font-size: 12px;
+                    font-size: 18px;
                     text-align: center;
                 }
                 .dpm-table-cell {
                     font-weight: normal;
-                    font-size: 12px;
+                    font-size: 18px;
                     text-align: center;
                 }
                 .dpm-footer {
                     font-weight: normal;
-                    font-size: 12px;
+                    font-size: 18px;
+                }
+                /* Style untuk company profile */
+                .o_company_address {
+                    font-family: "Courier New", Courier, monospace !important;
+                    font-size: 18px !important;
+                    font-weight: normal !important;
+                }
+                /* Hapus semua font-weight: bold dari inline style */
+                p, span, strong, th, td {
+                    font-weight: normal !important;
+                    font-family: "Courier New", Courier, monospace !important;
+                }
+                .o_company_1_layout {
+                    font-family: "Courier New", Courier, monospace !important;
+                    font-size: 18px !important;
                 }
             </style>
             <t t-call="web.external_layout">
