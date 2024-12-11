@@ -3,12 +3,46 @@
     <data>
         <!-- Template QWeb -->
         <template id="dpm_cn_template">
+            <style>
+                /* Font Styles untuk Dot Matrix Printer */
+                .dpm-font {
+                    font-family: "Courier New", Courier, monospace;
+                }
+                .dpm-header {
+                    font-size: 14px;
+                    font-weight: normal;
+                    text-align: center;
+                }
+                .dpm-label {
+                    font-weight: normal;
+                    width: 80px;
+                    display: inline-block;
+                    font-size: 12px;
+                }
+                .dpm-value {
+                    font-weight: normal;
+                    font-size: 12px;
+                }
+                .dpm-table-header {
+                    font-weight: normal;
+                    font-size: 12px;
+                    text-align: center;
+                }
+                .dpm-table-cell {
+                    font-weight: normal;
+                    font-size: 12px;
+                    text-align: center;
+                }
+                .dpm-footer {
+                    font-weight: normal;
+                    font-size: 12px;
+                }
+            </style>
             <t t-call="web.external_layout">
                 <t t-foreach="docs" t-as="o">
-                    <!-- Language and Page Information in Header -->
-                    <div class="row" style="margin-bottom: 5px;">
+                    <div class="row dpm-font">
                         <div class="text-center">
-                            <span style="font-weight: bold; font-size: 125%;"><strong>CREDIT NOTE</strong></span>
+                            <span class="dpm-header">CREDIT NOTE</span>
                         </div>
                     </div>
                     <br/>
@@ -36,7 +70,7 @@
                                     <p style="font-weight: bold; margin-bottom: 2px;">
                                         <strong style="display: inline-block; width: 80px;">Salesman</strong>
                                         <strong>:</strong>
-                                        <t t-set="employee_names" t-value="', '.join([emp.name for emp in o.employee_id]) if o.employee_id else '-'"/>
+                                        <t t-set="employee_names" t-value="', '.join([emp.initial for emp in o.employee_id]) if o.employee_id else '-'"/>
                                         <span t-esc="employee_names" style="font-weight: bold;"/>
                                     </p>
                                 </div>

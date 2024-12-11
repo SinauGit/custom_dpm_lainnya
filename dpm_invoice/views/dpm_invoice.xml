@@ -3,82 +3,118 @@
     <data>
         <!-- Template QWeb -->
         <template id="dpm_invoice_template">
+            <style>
+                /* Font Styles untuk Dot Matrix Printer */
+                .dpm-font {
+                    font-family: "Courier New", Courier, monospace;
+                }
+                .dpm-header {
+                    font-size: 14px;
+                    font-weight: normal;
+                    text-align: center;
+                }
+                .dpm-label {
+                    font-weight: normal;
+                    width: 80px;
+                    display: inline-block;
+                    font-size: 12px;
+                }
+                .dpm-value {
+                    font-weight: normal;
+                    font-size: 12px;
+                }
+                .dpm-table-header {
+                    font-weight: normal;
+                    font-size: 12px;
+                    text-align: center;
+                }
+                .dpm-table-cell {
+                    font-weight: normal;
+                    font-size: 12px;
+                    text-align: center;
+                }
+                .dpm-footer {
+                    font-weight: normal;
+                    font-size: 12px;
+                }
+            </style>
+
             <t t-call="web.external_layout">
                 <t t-foreach="docs" t-as="o">
                     <!-- Language and Page Information in Header -->
-                    <div class="row" style="margin-bottom: 5px;">
+                    <div class="row dpm-font">
                         <div class="text-center">
-                            <span style="font-weight: bold; font-size: 125%;"><strong>INVOICE</strong></span>
+                            <span class="dpm-header">INVOICE</span>
                         </div>
                     </div>
                     <br/>
                     <main>
                         <div class="page" style="padding: 10px;">
                             <!-- HEADER -->
-                            <div class="row" style="margin-bottom: 5px;">
+                            <div class="row dpm-font">
                                 <div class="col-6 text-left">
-                                    <p style="font-weight: bold; margin-bottom: 2px;">
-                                        <strong style="display: inline-block; width: 80px;">No</strong>
+                                    <p class="mb-2">
+                                        <span class="dpm-label">No</span>
                                         <strong>:</strong>
-                                        <span t-esc="o.name" style="font-weight: bold;"/>
+                                        <span class="dpm-value" t-esc="o.name"/>
                                     </p>
-                                    <p style="font-weight: bold; margin-bottom: 2px;">
-                                        <strong style="display: inline-block; width: 80px;">Date</strong>
+                                    <p class="mb-2">
+                                        <span class="dpm-label">Date</span>
                                         <strong>:</strong>
-                                        <span t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')" style="font-weight: bold;"/>
-                                        <span t-else="">-</span>
+                                        <span class="dpm-value" t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')" style="font-weight: bold;"/>
+                                        <span class="dpm-value" t-else="">-</span>
                                     </p>
-                                    <p style="font-weight: bold; margin-bottom: 2px;">
-                                        <strong style="display: inline-block; width: 80px;">Due Date</strong>
+                                    <p class="mb-2">
+                                        <span class="dpm-label">Due Date</span>
                                         <strong>:</strong>
-                                        <span t-esc="o.invoice_date_due.strftime('%d.%m.%y') or '-'" style="font-weight: bold;"/>
+                                        <span class="dpm-value" t-esc="o.invoice_date_due.strftime('%d.%m.%y') or '-'" style="font-weight: bold;"/>
                                     </p>
-                                    <p style="font-weight: bold; margin-bottom: 2px;">
-                                        <strong style="display: inline-block; width: 80px;">Salesman</strong>
+                                    <p class="mb-2">
+                                        <span class="dpm-label">Salesman</span>
                                         <strong>:</strong>
-                                        <t t-set="employee_names" t-value="', '.join([emp.name for emp in o.employee_id]) if o.employee_id else '-'"/>
-                                        <span t-esc="employee_names" style="font-weight: bold;"/>
+                                        <t t-set="employee_names" t-value="', '.join([emp.initial for emp in o.employee_id]) if o.employee_id else '-'"/>
+                                        <span class="dpm-value" t-esc="employee_names" style="font-weight: bold;"/>
                                     </p>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><strong>Cust No. :</strong> <span t-esc="o.partner_id.ref or o.partner_id.id" style="font-weight: bold;"/></p>
-                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><span t-esc="o.partner_id.name or ''" style="font-weight: bold;"/></p>
-                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;">
-                                        <span t-esc="o.partner_id.street or ''" style="font-weight: bold;"/><br/>
-                                        <span t-esc="o.partner_id.city or ''" style="font-weight: bold;"/><span>, </span>
-                                        <span t-esc="o.partner_id.country_id.name or ''" style="font-weight: bold;"/>
+                                    <p class="mb-2"><strong>Cust No. :</strong> <span class="dpm-value" t-esc="o.partner_id.ref or o.partner_id.id" style="font-weight: bold;"/></p>
+                                    <p class="mb-2"><span class="dpm-value" t-esc="o.partner_id.name or ''" style="font-weight: bold;"/></p>
+                                    <p class="mb-2">
+                                        <span class="dpm-value" t-esc="o.partner_id.street or ''" style="font-weight: bold;"/><br/>
+                                        <span class="dpm-value" t-esc="o.partner_id.city or ''" style="font-weight: bold;"/><span>, </span>
+                                        <span class="dpm-value" t-esc="o.partner_id.country_id.name or ''" style="font-weight: bold;"/>
                                     </p>
-                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><strong>Telephone:</strong> <span t-esc="o.partner_id.phone or ''" style="font-weight: bold;"/></p>
+                                    <p class="mb-2"><strong>Telephone:</strong> <span class="dpm-value" t-esc="o.partner_id.phone or ''" style="font-weight: bold;"/></p>
                                 </div>
                             </div>
                             <br/>
-                            <div class="row" style="margin-bottom: 5px;">
+                            <div class="row dpm-font">
                                 <div class="col-12">
-                                    <p style="font-weight: bold; margin-bottom: 2px;">
+                                    <p class="mb-2">
                                         <strong>Remarks:</strong> 
-                                        <span t-esc="o.narration or ''" style="font-weight: bold;"/> On Sales Orders 
-                                        <span t-esc="o.invoice_origin or 'No-Sales Order'" style="font-weight: bold;"/>. 
+                                        <span class="dpm-value" t-esc="o.narration or ''" style="font-weight: bold;"/> On Sales Orders 
+                                        <span class="dpm-value" t-esc="o.invoice_origin or 'No-Sales Order'" style="font-weight: bold;"/>. 
                                         Based On Deliveries No. 
                                         <t t-set="picking" t-value="env['stock.picking'].search([('sale_id.name', '=', o.invoice_origin), ('state', '=', 'done')], limit=1)"/>
-                                        <span t-esc="picking.name or 'No-Delivery'" style="font-weight: bold;"/>.
+                                        <span class="dpm-value" t-esc="picking.name or 'No-Delivery'" style="font-weight: bold;"/>.
                                     </p>
                                 </div>
                             </div>
                             <br/>
                             <!-- TABLE -->
-                            <table class="table table-sm table-bordered" style="margin-bottom: 5px;">
+                            <table class="table table-sm table-bordered dpm-font">
                                 <thead>
                                     <tr>
-                                        <th style="font-weight: bold;">No</th>
-                                        <th style="font-weight: bold;">Brand - Model</th>
+                                        <th class="dpm-table-header">No</th>
+                                        <th class="dpm-table-header">Brand - Model</th>
                                         <!-- <th style="font-weight: bold;">Model</th> -->
-                                        <th style="font-weight: bold;">Color</th>
-                                        <th style="font-weight: bold;">Size</th>
-                                        <th style="font-weight: bold;">Qty</th>
-                                        <th style="font-weight: bold;">Unit Price</th>
-                                        <th style="font-weight: bold;">Disc (%)</th>
+                                        <th class="dpm-table-header">Color</th>
+                                        <th class="dpm-table-header">Size</th>
+                                        <th class="dpm-table-header">Qty</th>
+                                        <th class="dpm-table-header">Unit Price</th>
+                                        <th class="dpm-table-header">Disc (%)</th>
                                         <!-- <th style="font-weight: bold;">Disc (Amount)</th> -->
-                                        <th style="font-weight: bold;">Amount</th>
+                                        <th class="dpm-table-header">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -117,15 +153,15 @@
                                 </tbody>
                             </table>
                             <!-- FOOTER -->
-                            <div class="row mt-2" style="margin-bottom: 5px;">
+                            <div class="row dpm-font">
                                 <div class="col-6 text-center">
                                     <!-- Kosong untuk menggeser total quantity ke kiri -->
-                                    <p style="margin-bottom: 2px;"><strong>Total Quantity:</strong> 
+                                    <p class="mb-2"><strong>Total Quantity:</strong> 
                                         <span t-esc="sum(int(line.quantity) for line in o.invoice_line_ids)" style="font-weight: bold;"/>
                                     </p>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <table class="table table-sm table-borderless mb-0" style="margin-bottom: 5px;">
+                                    <table class="table table-sm table-borderless mb-0 dpm-font">
                                         <!-- Total Gross -->
                                         <tr>
                                             <td><strong>Subtotal</strong></td>
