@@ -36,7 +36,8 @@
                                     <p style="font-weight: bold; margin-bottom: 2px;">
                                         <strong style="display: inline-block; width: 80px;">Salesman</strong>
                                         <strong>:</strong>
-                                        <span t-esc="o.employee_id.name or '-'" style="font-weight: bold;"/>
+                                        <t t-set="employee_names" t-value="', '.join([emp.name for emp in o.employee_id]) if o.employee_id else '-'"/>
+                                        <span t-esc="employee_names" style="font-weight: bold;"/>
                                     </p>
                                 </div>
                                 <div class="col-6 text-right">
