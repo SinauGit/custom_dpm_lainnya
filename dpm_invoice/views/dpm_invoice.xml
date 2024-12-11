@@ -6,36 +6,36 @@
             <style>
                 /* Font Styles untuk Dot Matrix Printer */
                 .dpm-font {
-                    font-family: "Courier New", Courier, monospace;
+                    font-family: "Courier New", Courier, monospace !important;
                 }
                 .dpm-header {
-                    font-size: 24.5px;
-                    font-weight: normal;
-                    text-align: center;
+                    font-size: 24.5px !important;
+                    font-weight: normal !important;
+                    text-align: center !important;
                 }
                 .dpm-label {
-                    font-weight: normal;
-                    width: 80px;
-                    display: inline-block;
-                    font-size: 18px;
+                    font-weight: normal !important;
+                    width: 80px !important;
+                    display: inline-block !important;
+                    font-size: 18px !important;
                 }
                 .dpm-value {
-                    font-weight: normal;
-                    font-size: 18px;
+                    font-weight: normal !important;
+                    font-size: 18px !important;
                 }
                 .dpm-table-header {
-                    font-weight: normal;
-                    font-size: 18px;
-                    text-align: center;
+                    font-weight: normal !important;
+                    font-size: 18px !important;
+                    text-align: center !important;
                 }
                 .dpm-table-cell {
-                    font-weight: normal;
-                    font-size: 18px;
-                    text-align: center;
+                    font-weight: normal !important;
+                    font-size: 18px !important;
+                    text-align: center !important;
                 }
                 .dpm-footer {
-                    font-weight: normal;
-                    font-size: 18px;
+                    font-weight: normal !important;
+                    font-size: 18px !important;
                 }
                 /* Style untuk company profile */
                 .o_company_address {
@@ -128,8 +128,8 @@
                                         <th class="dpm-table-header">Size</th>
                                         <th class="dpm-table-header">Qty</th>
                                         <th class="dpm-table-header">Unit Price</th>
-                                        <th class="dpm-table-header">Disc (%)</th>
-                                        <!-- <th style="font-weight: bold;">Disc (Amount)</th> -->
+                                        <th class="dpm-table-header">Disc.(%)</th>
+                                        <th style="font-weight: bold;">Disc.(Amount)</th>
                                         <th class="dpm-table-header">Amount</th>
                                     </tr>
                                 </thead>
@@ -158,9 +158,9 @@
                                             <td class="text-center" style="font-weight: bold;">
                                                 <span t-esc="'%.2f' % (line.discount or 0.00)" style="font-weight: bold;"/>
                                             </td>
-                                            <!-- <td class="text-center" style="font-weight: bold;">
+                                            <td class="text-center" style="font-weight: bold;">
                                                 <span t-esc="line.discount_fixed or 0.00"  t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
-                                            </td> -->
+                                            </td>
                                             <td class="text-center" style="font-weight: bold;">
                                                 <span t-esc="line.price_subtotal or '0.00'" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
                                             </td>
@@ -200,7 +200,7 @@
                                                 <span t-foreach="o.invoice_line_ids.mapped('tax_ids')" t-as="tax" style="display: inline-block; text-align: center;">
                                                     <span t-esc="tax.display_name or ''" style="font-weight: bold; margin-right: 40px;"/>
                                                 </span>
-                                                <span t-esc="o.amount_tax or 0.0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
+                                                <span t-esc="o.amount_tax or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
                                             </td>
                                         </tr>
                                         <!-- Biaya Kirim -->
@@ -214,7 +214,7 @@
                                         <tr>
                                             <td><strong>Total </strong></td>
                                             <td class="text-end">
-                                                <span t-esc="o.amount_total or 0" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
+                                                <span t-esc="o.amount_total or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
                                             </td>
                                         </tr>
                                     </table>
