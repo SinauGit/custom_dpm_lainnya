@@ -76,7 +76,7 @@
                                         <th style="font-weight: bold;">Qty</th>
                                         <th style="font-weight: bold;">Unit Price</th>
                                         <th style="font-weight: bold;">Disc (%)</th>
-                                        <th style="font-weight: bold;">Disc (Amount)</th>
+                                        <!-- <th style="font-weight: bold;">Disc (Amount)</th> -->
                                         <th style="font-weight: bold;">Amount</th>
                                     </tr>
                                 </thead>
@@ -106,7 +106,7 @@
                                                 <span t-esc="'%.2f' % (line.discount or 0.00)" style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
-                                                <span t-esc="line.discount_fixed or 0.00"  t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
+                                                <!-- <span t-esc="line.discount_fixed or 0.00"  t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/> -->
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
                                                 <span t-esc="line.price_subtotal or '0.00'" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
