@@ -1,1 +1,1 @@
-from . import test_account_fixed_discount
+from . import test_sale_fixed_discount
