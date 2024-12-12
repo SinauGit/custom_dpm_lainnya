@@ -93,16 +93,16 @@
                             <table class="dpm-table">
                                 <thead>
                                     <tr>
-                                        <th class="text-center">No</th>
-                                        <th class="text-center">Brand - Model</th>
+                                        <th>No</th>
+                                        <th>Brand - Model</th>
                                         <!-- <th class="text-center">Model</th> -->
-                                        <th class="text-center">Color</th>
-                                        <th class="text-center">Size</th>
-                                        <th class="text-center">Qty</th>
-                                        <th class="text-center">Unit Price</th>
-                                        <th class="text-center">Disc.(%)</th>
-                                        <th class="text-center">Disc.(Amount)</th>
-                                        <th class="text-center">Amount</th>
+                                        <th>Color</th>
+                                        <th>Size</th>
+                                        <th>Qty</th>
+                                        <th>Unit Price</th>
+                                        <th>Disc.(%)</th>
+                                        <th>Disc.(Amount)</th>
+                                        <th>Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -112,34 +112,34 @@
                                         <!-- Increment the counter -->
                                         <t t-set="counter" t-value="counter + 1"/>
                                         <tr>
-                                            <td class="text-center"><span t-esc="counter"/></td>
-                                            <td class="text-center"><span t-esc="line.product_id.name or 'No Brand - Model'"/></td>
+                                            <td><span t-esc="counter"/></td>
+                                            <td><span t-esc="line.product_id.name or 'No Brand - Model'"/></td>
                                             <!-- <td class="text-center"><span t-esc="line.product_id.default_code or ''"/></td> -->
-                                            <td class="text-center">
+                                            <td>
                                                 <!-- Memperbaiki pemanggilan warna produk -->
                                                 <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Color').value_ids.mapped('name')) or 'Hitam'"/>
                                             </td>
-                                            <td class="text-center">
+                                            <td>
                                                 <!-- Memperbaiki pemanggilan ukuran produk -->
                                                 <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Size').value_ids.mapped('name')) or 'L'"/>
                                             </td>
-                                            <td class="text-center">
+                                            <td>
                                                 <span t-esc="'%.2f' % line.quantity"/>
                                             </td>
-                                            <td class="text-center">
+                                            <td>
                                                 <span t-esc="line.price_unit or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                             </td>
-                                            <td class="text-center">
+                                            <td>
                                                 <span t-esc="'%.2f' % (line.discount or 0.00)"/>
                                             </td>
-                                            <td class="text-center">
+                                            <td>
                                                 <span t-esc="line.discount_fixed" t-options='{
                                                     "widget": "monetary",
                                                     "display_currency": o.currency_id,
                                                     "precision": 2
                                                 }'/>
                                             </td>
-                                            <td class="text-center">
+                                            <td>
                                                 <span t-esc="line.price_subtotal or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                             </td>
                                         </tr>
@@ -153,26 +153,26 @@
                                     Total Quantity: <span t-esc="sum(int(line.quantity) for line in o.invoice_line_ids) or 0.00"/>
                                 </div>
                                 <div class="summary-details">
-                                    <table class="table table-sm table-borderless mb-0">
+                                    <table class="summary-table">
                                         <!-- Total Gross -->
                                         <tr>
-                                            <td><strong>Subtotal</strong></td>
-                                            <td class="text-end">
+                                            <td>Subtotal</td>
+                                            <td class="amount-cell">
                                                 <span t-esc="sum(line.price_unit for line in o.invoice_line_ids) or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="margin-right: 20px;"/>
                                             </td>
                                         </tr>
                                         <!-- Discount -->
                                         <tr>
-                                            <td><strong>Discount</strong></td>
-                                            <td class="text-end">
+                                            <td>Discount</td>
+                                            <td class="amount-cell">
                                                 <t t-set="total_discount" t-value="sum((line.price_unit * line.quantity * line.discount/100) for line in o.invoice_line_ids) or 0.00"/>
                                                 <span t-esc="total_discount" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="margin-right: 20px;"/>
                                             </td>
                                         </tr>
                                         <!-- Ppn -->
                                         <tr>
-                                            <td><strong>VAT</strong></td>
-                                            <td class="text-end">
+                                            <td>VAT</td>
+                                            <td class="amount-cell">
                                                 <span t-foreach="o.invoice_line_ids.mapped('tax_ids')" t-as="tax" style="display: inline-block; text-align: center;">
                                                     <span t-esc="tax.display_name or ''" style="margin-right: 40px;"/>
                                                 </span>
@@ -182,15 +182,15 @@
 
                                         <!-- Biaya Kirim -->
                                         <tr>
-                                            <td><strong>Shipping</strong></td>
-                                            <td class="text-end">
+                                            <td>Shipping</td>
+                                            <td class="amount-cell">
                                                 <!-- <span t-esc="int(o.delivery_cost or 0)" style="margin-right: 20px;"/> -->
                                             </td>
                                         </tr>
                                         <!-- Total Jumlah -->
                                         <tr>
-                                            <td><strong>Total </strong></td>
-                                            <td class="text-end">
+                                            <td>Total </td>
+                                            <td class="amount-cell">
                                                 <span t-esc="o.amount_total or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="margin-right: 20px;"/>
                                             </td>
                                         </tr>

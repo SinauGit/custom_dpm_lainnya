@@ -52,16 +52,12 @@
     .dpm-table {
         width: 100%;
         margin-bottom: $spacing-sm;
+        border: 1px solid #dee2e6;
         
         th, td {
             text-align: center;
-            padding: $spacing-xs;
-        }
-        
-        &.borderless {
-            tr, td {
-                border: none;
-            }
+            padding: $spacing-xs $spacing-sm;
+            border: 1px solid #dee2e6;
         }
     }
     
@@ -78,14 +74,15 @@
         .summary-details {
             width: 40%;
             
-            table {
+            .summary-table {
                 width: 100%;
+                margin-bottom: 0;
                 
                 tr, td {
                     border: none;
-                    padding: $spacing-xs 0;
+                    padding: $spacing-xs $spacing-sm;
                     
-                    &:last-child {
+                    &.amount-cell {
                         text-align: right;
                         padding-right: $spacing-lg;
                     }
