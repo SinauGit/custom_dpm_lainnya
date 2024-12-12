@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Template QWeb -->
-        <template id="dpm_invoice_template">
+<!-- Template QWeb -->
+        <template id="my_invoice_noppn_template">
             <style>
                 /* Font Styles untuk Dot Matrix Printer */
                 .dpm-font {
@@ -53,11 +53,10 @@
                     font-size: 18px !important;
                 }
             </style>
-
             <t t-call="web.external_layout">
                 <t t-foreach="docs" t-as="o">
                     <!-- Language and Page Information in Header -->
-                    <div class="row dpm-font">
+                    <div class="row dpm-font" style="margin-bottom: 5px;">
                         <div class="text-center">
                             <span class="dpm-header">INVOICE</span>
                         </div>
@@ -66,44 +65,44 @@
                     <main>
                         <div class="page" style="padding: 10px;">
                             <!-- HEADER -->
-                            <div class="row dpm-font">
+                            <div class="row dpm-font" style="margin-bottom: 5px;">
                                 <div class="col-6 text-left">
-                                    <p class="mb-2">
-                                        <span class="dpm-label">No</span>
+                                    <p style="font-weight: bold; margin-bottom: 2px;">
+                                        <strong style="display: inline-block; width: 80px;">No</strong>
                                         <strong>:</strong>
-                                        <span class="dpm-value" t-esc="o.name"/>
+                                        <span t-esc="o.name" style="font-weight: bold;"/>
                                     </p>
-                                    <p class="mb-2">
-                                        <span class="dpm-label">Date</span>
+                                    <p style="font-weight: bold; margin-bottom: 2px;">
+                                        <strong style="display: inline-block; width: 80px;">Date</strong>
                                         <strong>:</strong>
-                                        <span class="dpm-value" t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')" style="font-weight: bold;"/>
-                                        <span class="dpm-value" t-else="">-</span>
+                                        <span t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')" style="font-weight: bold;"/>
+                                        <span t-else="">-</span>
                                     </p>
-                                    <p class="mb-2">
-                                        <span class="dpm-label">Due Date</span>
+                                    <p style="font-weight: bold; margin-bottom: 2px;">
+                                        <strong style="display: inline-block; width: 80px;">Due Date</strong>
                                         <strong>:</strong>
-                                        <span class="dpm-value" t-esc="o.invoice_date_due.strftime('%d.%m.%y') or '-'" style="font-weight: bold;"/>
+                                        <span t-esc="o.invoice_date_due.strftime('%d.%m.%y') or '-'" style="font-weight: bold;"/>
                                     </p>
-                                    <p class="mb-2">
-                                        <span class="dpm-label">Salesman</span>
+                                    <p style="font-weight: bold; margin-bottom: 2px;">
+                                        <strong style="display: inline-block; width: 80px;">Salesman</strong>
                                         <strong>:</strong>
                                         <t t-set="employee_names" t-value="', '.join([emp.initial for emp in o.employee_id]) if o.employee_id else '-'"/>
-                                        <span class="dpm-value" t-esc="employee_names" style="font-weight: bold;"/>
+                                        <span t-esc="employee_names" style="font-weight: bold;"/>
                                     </p>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <p class="mb-2"><strong>Cust No. :</strong> <span class="dpm-value" t-esc="o.partner_id.ref or o.partner_id.id" style="font-weight: bold;"/></p>
-                                    <p class="mb-2"><span class="dpm-value" t-esc="o.partner_id.name or ''" style="font-weight: bold;"/></p>
-                                    <p class="mb-2">
-                                        <span class="dpm-value" t-esc="o.partner_id.street or ''" style="font-weight: bold;"/><br/>
-                                        <span class="dpm-value" t-esc="o.partner_id.city or ''" style="font-weight: bold;"/><span>, </span>
-                                        <span class="dpm-value" t-esc="o.partner_id.country_id.name or ''" style="font-weight: bold;"/>
+                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><strong>Cust No. :</strong> <span t-esc="o.partner_id.ref or o.partner_id.id" style="font-weight: bold;"/></p>
+                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><span t-esc="o.partner_id.name or ''" style="font-weight: bold;"/></p>
+                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;">
+                                        <span t-esc="o.partner_id.street or ''" style="font-weight: bold;"/><br/>
+                                        <span t-esc="o.partner_id.city or ''" style="font-weight: bold;"/><span>, </span>
+                                        <span t-esc="o.partner_id.country_id.name or ''" style="font-weight: bold;"/>
                                     </p>
-                                    <p class="mb-2"><strong>Telephone:</strong> <span class="dpm-value" t-esc="o.partner_id.phone or ''" style="font-weight: bold;"/></p>
+                                    <p style="font-weight: bold; margin-bottom: 2px; margin-left: 20px;"><strong>Telephone:</strong> <span t-esc="o.partner_id.phone or ''" style="font-weight: bold;"/></p>
                                 </div>
                             </div>
                             <br/>
-                            <div class="row dpm-font">
+                            <div class="row" style="margin-bottom: 5px;">
                                 <div class="col-12">
                                     <p class="mb-2">
                                         <strong>Remarks:</strong> 
@@ -118,19 +117,19 @@
                             </div>
                             <br/>
                             <!-- TABLE -->
-                            <table class="table table-sm table-bordered dpm-font">
+                            <table class="table table-sm table-bordered" style="margin-bottom: 5px;">
                                 <thead>
                                     <tr>
-                                        <th class="dpm-table-header">No</th>
-                                        <th class="dpm-table-header">Brand - Model</th>
+                                        <th style="font-weight: bold;">No</th>
+                                        <th style="font-weight: bold;">Brand - Model</th>
                                         <!-- <th style="font-weight: bold;">Model</th> -->
-                                        <th class="dpm-table-header">Color</th>
-                                        <th class="dpm-table-header">Size</th>
-                                        <th class="dpm-table-header">Qty</th>
-                                        <th class="dpm-table-header">Unit Price</th>
-                                        <th class="dpm-table-header">Disc.(%)</th>
+                                        <th style="font-weight: bold;">Color</th>
+                                        <th style="font-weight: bold;">Size</th>
+                                        <th style="font-weight: bold;">Qty</th>
+                                        <th style="font-weight: bold;">Unit Price</th>
+                                        <th style="font-weight: bold;">Disc.(%)</th>
                                         <th style="font-weight: bold;">Disc.(Amount)</th>
-                                        <th class="dpm-table-header">Amount</th>
+                                        <th style="font-weight: bold;">Amount</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -144,16 +143,18 @@
                                             <td class="text-center" style="font-weight: bold;"><span t-esc="line.product_id.name or 'No Brand - Model'" style="font-weight: bold;"/></td>
                                             <!-- <td class="text-center" style="font-weight: bold;"><span t-esc="line.product_id.default_code or ''" style="font-weight: bold;"/></td> -->
                                             <td class="text-center" style="font-weight: bold;">
+                                                <!-- Memperbaiki pemanggilan warna produk -->
                                                 <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Color').value_ids.mapped('name')) or 'Hitam'" style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
+                                                <!-- Memperbaiki pemanggilan ukuran produk -->
                                                 <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Size').value_ids.mapped('name')) or 'L'" style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
                                                 <span t-esc="'%.2f' % line.quantity" style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
-                                                <span t-esc="line.price_unit or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                <span t-esc="line.price_unit or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
                                                 <span t-esc="'%.2f' % (line.discount or 0.00)" style="font-weight: bold;"/>
@@ -166,22 +167,22 @@
                                                 }' style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
-                                                <span t-esc="line.price_subtotal or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                <span t-esc="line.price_subtotal or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold;"/>
                                             </td>
                                         </tr>
                                     </t>
                                 </tbody>
                             </table>
                             <!-- FOOTER -->
-                            <div class="row dpm-font">
+                            <div class="row mt-2" style="margin-bottom: 5px;">
                                 <div class="col-6 text-center">
                                     <!-- Kosong untuk menggeser total quantity ke kiri -->
-                                    <p class="mb-2"><strong>Total Quantity:</strong> 
+                                    <p style="margin-bottom: 2px;"><strong>Total Quantity:</strong> 
                                         <span t-esc="sum(int(line.quantity) for line in o.invoice_line_ids) or 0.00" style="font-weight: bold;"/>
                                     </p>
                                 </div>
                                 <div class="col-6 text-right">
-                                    <table class="table table-sm table-borderless mb-0 dpm-font">
+                                    <table class="table table-sm table-borderless mb-0" style="margin-bottom: 5px;">
                                         <!-- Total Gross -->
                                         <tr>
                                             <td><strong>Subtotal</strong></td>
@@ -207,6 +208,7 @@
                                                 <span t-esc="o.amount_tax or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
                                             </td>
                                         </tr>
+
                                         <!-- Biaya Kirim -->
                                         <tr>
                                             <td><strong>Shipping</strong></td>
@@ -221,7 +223,7 @@
                                                 <span t-esc="o.amount_total or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
                                             </td>
                                         </tr>
-                                    </table>
+                                       </table>
                                 </div>
                             </div>
                                 <footer>
