@@ -1,75 +1,113 @@
 .o_report_layout_standard {
-    .dpm-font {
+    // Variables
+    $spacing-xs: 2px;
+    $spacing-sm: 5px;
+    $spacing-md: 10px;
+    $spacing-lg: 20px;
+    $spacing-xl: 80px;
+    
+    $font-size-normal: 14px;
+    $font-size-large: 18px;
+    
+    // Base Styles
+    .dpm-container {
         font-family: 'Courier New', Courier, monospace;
-        font-weight: bold;
+        padding: $spacing-md;
     }
-
+    
+    // Header Styles
     .dpm-header {
-        font-size: 18px;
-        font-weight: bold;
+        font-size: $font-size-large;
+        margin-bottom: $spacing-md;
     }
-
-    .page {
-        padding: 10px;
-
-        p {
-            margin-bottom: 2px;
-            
-            strong {
-                &:first-child {
-                    display: inline-block;
-                    width: 80px;
-                }
-            }
-        }
-
-        .table {
-            margin-bottom: 5px;
-            
-            th, td {
-                text-align: center;
-                font-weight: bold;
-                padding: 3px;
-            }
-
-            &.table-borderless {
-                tr, td {
-                    border: none !important;
-                }
-            }
-        }
-
-        .mt-2 {
-            margin-top: 2px;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-
-        .text-center {
-            text-align: center;
-        }
-    }
-
-    .info-row {
-        margin-bottom: 2px;
+    
+    // Info Section Styles
+    .dpm-info-section {
         display: flex;
-        align-items: baseline;
+        margin-bottom: $spacing-md;
         
-        .info-label {
-            width: 80px;
-            display: inline-block;
+        .info-row {
+            display: flex;
+            align-items: baseline;
+            margin-bottom: $spacing-xs;
+            
+            .info-label {
+                width: 80px;
+                display: inline-block;
+            }
+            
+            .info-separator {
+                width: 15px;
+                text-align: center;
+            }
         }
         
-        .info-separator {
-            width: 15px;
-            display: inline-block;
+        .customer-info {
+            text-align: right;
+            padding-right: $spacing-lg;
+        }
+    }
+    
+    // Table Styles
+    .dpm-table {
+        width: 100%;
+        margin-bottom: $spacing-sm;
+        
+        th, td {
             text-align: center;
+            padding: $spacing-xs;
         }
         
-        .info-value {
+        &.borderless {
+            tr, td {
+                border: none;
+            }
+        }
+    }
+    
+    // Summary Styles
+    .dpm-summary {
+        display: flex;
+        justify-content: space-between;
+        margin-top: $spacing-sm;
+        
+        .quantity-total {
+            margin-left: 25%;
+        }
+        
+        .summary-details {
+            width: 40%;
+            
+            table {
+                width: 100%;
+                
+                tr, td {
+                    border: none;
+                    padding: $spacing-xs 0;
+                    
+                    &:last-child {
+                        text-align: right;
+                        padding-right: $spacing-lg;
+                    }
+                }
+            }
+        }
+    }
+    
+    // Signature Styles
+    .dpm-signature {
+        text-align: right;
+        margin-top: $spacing-xl;
+        
+        .signature-line {
+            border-bottom: 1px solid black;
+            width: 150px;
             display: inline-block;
+            margin: 0 $spacing-lg;
+            
+            &:last-child {
+                margin-right: 0;
+            }
         }
     }
 }

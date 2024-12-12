@@ -6,18 +6,17 @@
 
             <t t-call="web.external_layout">
                 <t t-foreach="docs" t-as="o">
-                    <!-- Language and Page Information in Header -->
-                    <div class="row dpm-font" style="margin-bottom: 5px;">
-                        <div class="text-center">
-                            <span class="dpm-header">INVOICE</span>
-                        </div>
+                    <!-- Header -->
+                    <div class="dpm-section">
+                        <div class="dpm-header text-center">INVOICE</div>
                     </div>
-                    <br/>
+                    
                     <main>
-                        <div class="page" style="padding: 10px;">
-                            <!-- HEADER -->
-                            <div class="row dpm-font" style="margin-bottom: 5px;">
-                                <div class="col-6 text-left">
+                        <div class="dpm-container">
+                            <!-- Info Section -->
+                            <div class="dpm-info-section">
+                                <!-- Left Column -->
+                                <div class="col-6">
                                     <p class="info-row">
                                         <span class="info-label">No</span>
                                         <span class="info-separator">:</span>
@@ -45,34 +44,53 @@
                                         </span>
                                     </p>
                                 </div>
-                                <div class="col-6 text-right">
-                                    <p style="margin-bottom: 2px; margin-left: 20px;"><strong>Cust No. :</strong> <span t-esc="o.partner_id.ref or o.partner_id.id"/></p>
-                                    <p style="margin-bottom: 2px; margin-left: 20px;"><span t-esc="o.partner_id.name or ''"/></p>
-                                    <p style="margin-bottom: 2px; margin-left: 20px;">
-                                        <span t-esc="o.partner_id.street or ''"/><br/>
-                                        <span t-esc="o.partner_id.city or ''"/><span>, </span>
-                                        <span t-esc="o.partner_id.country_id.name or ''"/>
-                                    </p>
-                                    <p style="margin-bottom: 2px; margin-left: 20px;"><strong>Telephone:</strong> <span t-esc="o.partner_id.phone or ''"/></p>
+                                
+                                <!-- Right Column -->
+                                <div class="col-6">
+                                    <div class="customer-info">
+                                        <p class="info-row">
+                                            <span class="info-label">Cust No.</span>
+                                            <span class="info-separator">:</span>
+                                            <span class="info-value" t-esc="o.partner_id.ref or o.partner_id.id"/>
+                                        </p>
+                                        <p class="info-row">
+                                            <span class="info-label">Name</span>
+                                            <span class="info-separator">:</span>
+                                            <span class="info-value" t-esc="o.partner_id.name or ''"/>
+                                        </p>
+                                        <p class="info-row">
+                                            <span class="info-label">Address</span>
+                                            <span class="info-separator">:</span>
+                                            <span class="info-value">
+                                                <span t-esc="o.partner_id.street or ''"/><br/>
+                                                <span t-esc="o.partner_id.city or ''"/><span>, </span>
+                                                <span t-esc="o.partner_id.country_id.name or ''"/>
+                                            </span>
+                                        </p>
+                                        <p class="info-row">
+                                            <span class="info-label">Telephone</span>
+                                            <span class="info-separator">:</span>
+                                            <span class="info-value" t-esc="o.partner_id.phone or ''"/>
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
-                            <br/>
-                            <div class="row" style="margin-bottom: 5px;">
-                                <div class="col-12">
-                                    <p class="mb-2">
-                                        <strong>Remarks:</strong> 
-                                        On Sales Orders <span class="dpm-value" t-esc="o.invoice_origin or 'No-Sales Order'"/>. 
-                                        Based On Deliveries No. 
-                                        <t t-set="picking" t-value="env['stock.picking'].search([('sale_id.name', '=', o.invoice_origin), ('state', '=', 'done')], limit=1)"/>
-                                        <span class="dpm-value" t-esc="picking.name or 'Belum Di Validate'"/>.
-                                        <br/>
-                                        <span class="dpm-value" t-esc="o.narration or ''"/>
-                                    </p>
-                                </div>
+
+                            <!-- Remarks Section -->
+                            <div class="dpm-remarks">
+                                <span class="remarks-label">Remarks:</span>
+                                <span class="remarks-value">
+                                    On Sales Orders <t t-esc="o.invoice_origin or 'No-Sales Order'"/>
+                                    Based On Deliveries No. 
+                                    <t t-set="picking" t-value="env['stock.picking'].search([('sale_id.name', '=', o.invoice_origin), ('state', '=', 'done')], limit=1)"/>
+                                    <t t-esc="picking.name or 'Belum Di Validate'"/>.
+                                    <br/>
+                                    <t t-esc="o.narration or ''"/>
+                                </span>
                             </div>
-                            <br/>
-                            <!-- TABLE -->
-                            <table class="table table-sm table-bordered" style="margin-bottom: 5px;">
+
+                            <!-- Table Section -->
+                            <table class="dpm-table">
                                 <thead>
                                     <tr>
                                         <th class="text-center">No</th>
@@ -128,15 +146,13 @@
                                     </t>
                                 </tbody>
                             </table>
-                            <!-- FOOTER -->
-                            <div class="row mt-2" style="margin-bottom: 5px;">
-                                <div class="col-6 text-center">
-                                    <!-- Kosong untuk menggeser total quantity ke kiri -->
-                                    <p style="margin-bottom: 2px;"><strong>Total Quantity:</strong> 
-                                        <span t-esc="sum(int(line.quantity) for line in o.invoice_line_ids) or 0.00"/>
-                                    </p>
+
+                            <!-- Summary Section -->
+                            <div class="dpm-summary">
+                                <div class="quantity-total">
+                                    Total Quantity: <span t-esc="sum(int(line.quantity) for line in o.invoice_line_ids) or 0.00"/>
                                 </div>
-                                <div class="col-6 text-right">
+                                <div class="summary-details">
                                     <table class="table table-sm table-borderless mb-0">
                                         <!-- Total Gross -->
                                         <tr>
@@ -181,14 +197,14 @@
                                        </table>
                                 </div>
                             </div>
-                                <footer>
-                                    <div style="position: relative; width: 100%; text-align: right; margin-top: 80px; margin-bottom: 10px; margin-right: 20px;">
-                                        <strong>Signature</strong>
-                                        <span style="border-bottom: 1px solid black; width: 150px; display: inline-block; margin-right: 20px;"></span>
-                                        <strong>Date</strong>
-                                        <span style="border-bottom: 1px solid black; width: 150px; display: inline-block;"></span>
-                                    </div>
-                                </footer>
+
+                            <!-- Signature Section -->
+                            <div class="dpm-signature">
+                                <span class="signature-label">Signature</span>
+                                <span class="signature-line"></span>
+                                <span class="signature-label">Date</span>
+                                <span class="signature-line"></span>
+                            </div>
                         </div>
                     </main>
                 </t>
