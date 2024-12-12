@@ -15,4 +15,9 @@
     ],
     'installable': True,
     'application': False,
+    'assets': {
+        'web.report_assets_common': [
+            '/your_module/static/src/scss/report.scss',
+        ],
+    },
 }
