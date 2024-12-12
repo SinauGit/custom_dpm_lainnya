@@ -97,6 +97,39 @@
                 }
             }
         }
+        
+        // Info row styles
+        .info-row {
+            margin-bottom: 2px;
+            line-height: 1.2;
+            
+            .info-label {
+                width: 80px;
+                display: inline-block;
+                padding-right: 5px;
+            }
+            
+            .info-separator {
+                width: 10px;
+                display: inline-block;
+                text-align: center;
+            }
+            
+            .info-value {
+                display: inline-block;
+            }
+        }
+        
+        // Customer info styles
+        .customer-info {
+            .info-row {
+                margin-bottom: 2px;
+                
+                .info-label {
+                    width: 80px;
+                }
+            }
+        }
     }
 }
 
