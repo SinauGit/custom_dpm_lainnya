@@ -1,0 +1,54 @@
+.o_report_layout_standard {
+    .dpm-font {
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bold;
+    }
+
+    .dpm-header {
+        font-size: 18px;
+        font-weight: bold;
+    }
+
+    .page {
+        padding: 10px;
+
+        p {
+            margin-bottom: 2px;
+            
+            strong {
+                &:first-child {
+                    display: inline-block;
+                    width: 80px;
+                }
+            }
+        }
+
+        .table {
+            margin-bottom: 5px;
+            
+            th, td {
+                text-align: center;
+                font-weight: bold;
+                padding: 3px;
+            }
+
+            &.table-borderless {
+                tr, td {
+                    border: none !important;
+                }
+            }
+        }
+
+        .mt-2 {
+            margin-top: 2px;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+    }
+}
