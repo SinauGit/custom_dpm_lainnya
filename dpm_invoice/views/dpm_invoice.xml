@@ -1,10 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-<!-- Template QWeb -->
-        <template id="dpm_invoice_template">
+        <!-- Inherit dan override external layout standard -->
+        <template id="external_layout_standard_custom" inherit_id="web.external_layout_standard" primary="True">
+            <xpath expr="//div[hasclass('o_company_1_layout')]" position="attributes">
+                <attribute name="t-attf-style">
+                    font-family: 'Courier New', Courier, monospace !important;
+                </attribute>
+            </xpath>
+            
+            <!-- Override company name -->
+            <xpath expr="//div[hasclass('o_company_1_layout')]//span[@t-field='company.name']" position="attributes">
+                <attribute name="t-attf-style">
+                    font-size: 18px !important;
+                    font-weight: bold !important;
+                </attribute>
+            </xpath>
+            
+            <!-- Override company address -->
+            <xpath expr="//div[hasclass('o_company_1_layout')]//span[@t-field='company.street']" position="attributes">
+                <attribute name="t-attf-style">
+                    font-size: 18px !important;
+                    font-weight: bold !important;
+                </attribute>
+            </xpath>
+            
+            <xpath expr="//div[hasclass('o_company_1_layout')]//span[@t-field='company.street2']" position="attributes">
+                <attribute name="t-attf-style">
+                    font-size: 18px !important;
+                    font-weight: bold !important;
+                </attribute>
+            </xpath>
+            
+            <xpath expr="//div[hasclass('o_company_1_layout')]//span[@t-field='company.city']" position="attributes">
+                <attribute name="t-attf-style">
+                    font-size: 18px !important;
+                    font-weight: bold !important;
+                </attribute>
+            </xpath>
+        </template>
 
-            <t t-call="web.external_layout">
+        <!-- Template invoice Anda yang sudah ada -->
+        <template id="dpm_invoice_template">
+            <!-- Gunakan layout custom -->
+            <t t-call="dpm_invoice.external_layout_standard_custom">
+                <!-- Konten template yang sudah ada -->
                 <t t-foreach="docs" t-as="o">
                     <main>
                         <div class="dpm-invoice">
