@@ -180,4 +180,43 @@
             }
         }
     }
+
+    .external_layout_standard {
+        .company_header {
+            font-family: "Courier New", Courier, monospace !important;
+            
+            .company_name {
+                font-size: 18px !important;
+                font-weight: bold !important;
+            }
+        }
+    }
+
+    address {
+        font-family: "Courier New", Courier, monospace !important;
+        font-size: 18px !important;
+        font-weight: bold !important;
+    }
+
+    .header {
+        .o_company_1_layout {
+            font-family: "Courier New", Courier, monospace !important;
+            
+            span, div, p, address {
+                font-size: 18px !important;
+                font-weight: bold !important;
+            }
+            
+            .o_company_name {
+                font-size: 18px !important;
+                font-weight: bold !important;
+            }
+            
+            .o_company_address {
+                font-family: "Courier New", Courier, monospace !important;
+                font-size: 18px !important;
+                font-weight: bold !important;
+            }
+        }
+    }
 }
