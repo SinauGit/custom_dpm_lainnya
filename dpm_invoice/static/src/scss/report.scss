@@ -51,4 +51,25 @@
             text-align: center;
         }
     }
+
+    .info-row {
+        margin-bottom: 2px;
+        display: flex;
+        align-items: baseline;
+        
+        .info-label {
+            width: 80px;
+            display: inline-block;
+        }
+        
+        .info-separator {
+            width: 15px;
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .info-value {
+            display: inline-block;
+        }
+    }
 }

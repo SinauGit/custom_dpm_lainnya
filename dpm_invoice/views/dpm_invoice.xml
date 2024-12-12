@@ -2,7 +2,7 @@
 <odoo>
     <data>
 <!-- Template QWeb -->
-        <template id="my_invoice_noppn_template">
+        <template id="dpm_invoice_template">
 
             <t t-call="web.external_layout">
                 <t t-foreach="docs" t-as="o">
@@ -18,27 +18,31 @@
                             <!-- HEADER -->
                             <div class="row dpm-font" style="margin-bottom: 5px;">
                                 <div class="col-6 text-left">
-                                    <p style="margin-bottom: 2px;">
-                                        <strong style="display: inline-block; width: 80px;">No</strong>
-                                        <strong>:</strong>
-                                        <span t-esc="o.name"/>
+                                    <p class="info-row">
+                                        <span class="info-label">No</span>
+                                        <span class="info-separator">:</span>
+                                        <span class="info-value" t-esc="o.name"/>
                                     </p>
-                                    <p style="margin-bottom: 2px;">
-                                        <strong style="display: inline-block; width: 80px;">Date</strong>
-                                        <strong>:</strong>
-                                        <span t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')"/>
-                                        <span t-else="">-</span>
+                                    <p class="info-row">
+                                        <span class="info-label">Date</span>
+                                        <span class="info-separator">:</span>
+                                        <span class="info-value">
+                                            <span t-if="o.invoice_date" t-esc="o.invoice_date.strftime('%d.%m.%y')"/>
+                                            <span t-else="">-</span>
+                                        </span>
                                     </p>
-                                    <p style="margin-bottom: 2px;">
-                                        <strong style="display: inline-block; width: 80px;">Due Date</strong>
-                                        <strong>:</strong>
-                                        <span t-esc="o.invoice_date_due.strftime('%d.%m.%y') or '-'"/>
+                                    <p class="info-row">
+                                        <span class="info-label">Due Date</span>
+                                        <span class="info-separator">:</span>
+                                        <span class="info-value" t-esc="o.invoice_date_due.strftime('%d.%m.%y') or '-'"/>
                                     </p>
-                                    <p style="margin-bottom: 2px;">
-                                        <strong style="display: inline-block; width: 80px;">Salesman</strong>
-                                        <strong>:</strong>
-                                        <t t-set="employee_names" t-value="', '.join([emp.initial for emp in o.employee_id]) if o.employee_id else '-'"/>
-                                        <span t-esc="employee_names"/>
+                                    <p class="info-row">
+                                        <span class="info-label">Salesman</span>
+                                        <span class="info-separator">:</span>
+                                        <span class="info-value">
+                                            <t t-set="employee_names" t-value="', '.join([emp.initial for emp in o.employee_id]) if o.employee_id else '-'"/>
+                                            <span t-esc="employee_names"/>
+                                        </span>
                                     </p>
                                 </div>
                                 <div class="col-6 text-right">
