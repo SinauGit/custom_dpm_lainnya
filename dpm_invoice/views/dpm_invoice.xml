@@ -213,5 +213,15 @@
                 <t t-call="dpm_invoice_template" t-lang="lang"/>
             </t>
         </template>
+
+        <template id="external_layout_standard" inherit_id="web.external_layout_standard">
+            <xpath expr="//div[hasclass('header')]" position="attributes">
+                <attribute name="style">
+                    font-family: 'Courier New', Courier, monospace !important;
+                    font-size: 18px !important;
+                    font-weight: bold !important;
+                </attribute>
+            </xpath>
+        </template>
     </data>
 </odoo>
