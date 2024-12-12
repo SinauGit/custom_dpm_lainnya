@@ -3,56 +3,7 @@
     <data>
 <!-- Template QWeb -->
         <template id="my_invoice_noppn_template">
-            <style>
-                /* Font Styles untuk Dot Matrix Printer */
-                .dpm-font {
-                    font-family: "Courier New", Courier, monospace !important;
-                }
-                .dpm-header {
-                    font-size: 24.5px !important;
-                    font-weight: normal !important;
-                    text-align: center !important;
-                }
-                .dpm-label {
-                    font-weight: normal !important;
-                    width: 80px !important;
-                    display: inline-block !important;
-                    font-size: 18px !important;
-                }
-                .dpm-value {
-                    font-weight: normal !important;
-                    font-size: 18px !important;
-                }
-                .dpm-table-header {
-                    font-weight: normal !important;
-                    font-size: 18px !important;
-                    text-align: center !important;
-                }
-                .dpm-table-cell {
-                    font-weight: normal !important;
-                    font-size: 18px !important;
-                    text-align: center !important;
-                }
-                .dpm-footer {
-                    font-weight: normal !important;
-                    font-size: 18px !important;
-                }
-                /* Style untuk company profile */
-                .o_company_address {
-                    font-family: "Courier New", Courier, monospace !important;
-                    font-size: 18px !important;
-                    font-weight: normal !important;
-                }
-                /* Hapus semua font-weight: bold dari inline style */
-                p, span, strong, th, td {
-                    font-weight: normal !important;
-                    font-family: "Courier New", Courier, monospace !important;
-                }
-                .o_company_1_layout {
-                    font-family: "Courier New", Courier, monospace !important;
-                    font-size: 18px !important;
-                }
-            </style>
+
             <t t-call="web.external_layout">
                 <t t-foreach="docs" t-as="o">
                     <!-- Language and Page Information in Header -->
