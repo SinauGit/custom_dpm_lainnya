@@ -161,7 +161,7 @@
                                                 <tr>
                                                     <td class="no-border">Subtotal</td>
                                                     <td class="text-end no-border">
-                                                        <span t-esc="sum(line.price_unit for line in o.invoice_line_ids) or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                        <span t-esc="sum(line.price_unit * line.quantity for line in o.invoice_line_ids) or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                                     </td>
                                                 </tr>
                                                 <tr>
