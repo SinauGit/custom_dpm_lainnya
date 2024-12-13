@@ -1,49 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Inherit dan override external layout standard -->
-        <template id="external_layout_standard_custom" inherit_id="web.external_layout_standard" primary="True">
-            <xpath expr="//div[hasclass('o_company_1_layout')]" position="attributes">
-                <attribute name="t-attf-style">
-                    font-family: 'Courier New', Courier, monospace !important;
-                </attribute>
-            </xpath>
-            
-            <!-- Override company name -->
-            <xpath expr="//div[hasclass('o_company_1_layout')]//span[@t-field='company.name']" position="attributes">
-                <attribute name="t-attf-style">
-                    font-size: 18px !important;
-                    font-weight: bold !important;
-                </attribute>
-            </xpath>
-            
-            <!-- Override company address -->
-            <xpath expr="//div[hasclass('o_company_1_layout')]//span[@t-field='company.street']" position="attributes">
-                <attribute name="t-attf-style">
-                    font-size: 18px !important;
-                    font-weight: bold !important;
-                </attribute>
-            </xpath>
-            
-            <xpath expr="//div[hasclass('o_company_1_layout')]//span[@t-field='company.street2']" position="attributes">
-                <attribute name="t-attf-style">
-                    font-size: 18px !important;
-                    font-weight: bold !important;
-                </attribute>
-            </xpath>
-            
-            <xpath expr="//div[hasclass('o_company_1_layout')]//span[@t-field='company.city']" position="attributes">
-                <attribute name="t-attf-style">
-                    font-size: 18px !important;
-                    font-weight: bold !important;
-                </attribute>
-            </xpath>
-        </template>
-
         <!-- Template invoice Anda yang sudah ada -->
         <template id="dpm_invoice_template">
             <!-- Gunakan layout custom -->
-            <t t-call="dpm_invoice.external_layout_standard_custom">
+            <t t-call="web.external_layout">
                 <!-- Konten template yang sudah ada -->
                 <t t-foreach="docs" t-as="o">
                     <main>
@@ -200,7 +161,7 @@
                                                 <tr>
                                                     <td class="no-border">Subtotal</td>
                                                     <td class="text-end no-border">
-                                                        <span t-esc="sum(line.price_unit * line.quantity for line in o.invoice_line_ids) or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                                        <span t-esc="sum(line.price_unit for line in o.invoice_line_ids) or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
                                                     </td>
                                                 </tr>
                                                 <tr>
