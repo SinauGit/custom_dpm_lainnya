@@ -23,8 +23,8 @@
             <field name="name">DPM Invoice Non-PPN</field>
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
-            <field name="report_name">dpm_invoice.dpm_invoice_noppn_template</field>
-            <field name="report_file">dpm_invoice.dpm_invoice_noppn_template</field>
+            <field name="report_name">dpm_invoice.my_invoice_noppn_templat</field>
+            <field name="report_file">dpm_invoice.my_invoice_noppn_templat</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
             <field name="binding_type">report</field>
@@ -35,8 +35,8 @@
         <record id="action_report_invoice_noppn_dpm" model="ir.actions.report">
             <field name="name">DPM Invoice Non-PPN</field>
             <field name="model">account.move</field>
-            <field name="report_name">dpm_invoice.dpm_invoice_noppn_template</field>
-            <field name="report_file">dpm_invoice.dpm_invoice_noppn_template</field>
+            <field name="report_name">dpm_invoice.my_invoice_noppn_templat</field>
+            <field name="report_file">dpm_invoice.my_invoice_noppn_templat</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
             <field name="binding_type">report</field>
