@@ -14,7 +14,7 @@
             <field name="margin_left">3</field>
             <field name="margin_right">3</field>
             <field name="header_line" eval="False"/>
-            <field name="header_spacing">0</field>
+            <field name="header_spacing">4</field>
             <field name="dpi">72</field>  <!-- Typical for dot matrix printers -->
         </record>
 
