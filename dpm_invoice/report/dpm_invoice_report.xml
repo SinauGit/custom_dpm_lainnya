@@ -1,29 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <!-- Define the new paper format for dot matrix printer -->
+        <record id="paperformat_dpm_invoice_dot_matrix" model="report.paperformat">
+            <field name="name">DPM Invoice Dot Matrix Paper Format</field>
+            <field name="default" eval="True"/>
+            <field name="format">custom</field>
+            <field name="page_height">279</field>  <!-- 11 inches in mm -->
+            <field name="page_width">241</field>   <!-- 9.5 inches in mm -->
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">3</field>
+            <field name="margin_bottom">3</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+            <field name="dpi">72</field>  <!-- Typical for dot matrix printers -->
+        </record>
 
-        <report
-            id="custom_invoice_report"
-            model="account.move"
-            string="DPM Invoice"
-            report_type="qweb-pdf"
-            name="dpm_invoice.dpm_invoice_template"
-            file="dpm_invoice.dpm_invoice_template"
-            print_report_name="object._get_report_base_filename()"
-        />
+        <!-- Update the existing report to use the new paper format -->
+        <record id="custom_invoice_report" model="ir.actions.report">
+            <field name="name">DPM Invoice</field>
+            <field name="model">account.move</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">dpm_invoice.dpm_invoice_template</field>
+            <field name="report_file">dpm_invoice.dpm_invoice_template</field>
+            <field name="print_report_name">(object._get_report_base_filename())</field>
+            <field name="binding_model_id" ref="account.model_account_move"/>
+            <field name="binding_type">report</field>
+            <field name="paperformat_id" ref="paperformat_dpm_invoice_dot_matrix"/>
+        </record>
 
-
+        <!-- The existing action_report_invoice_dpm record -->
         <record id="action_report_invoice_dpm" model="ir.actions.report">
             <field name="name">DPM Invoice</field>
             <field name="model">account.move</field>
             <field name="report_name">dpm_invoice.dpm_invoice_template</field>
             <field name="report_file">dpm_invoice.dpm_invoice_template</field>
             <field name="print_report_name">(object._get_report_base_filename())</field>
-            <field name="attachment"/>
-            <field name="report_type">qweb-pdf</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
             <field name="binding_type">report</field>
-            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')),
- (4, ref('account.group_account_readonly'))]"/>        </record>
+            <field name="groups_id" eval="[(4, ref('account.group_account_invoice')), (4, ref('account.group_account_readonly'))]"/>
+        </record>
     </data>
 </odoo>

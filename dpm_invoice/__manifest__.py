@@ -15,9 +15,4 @@
     ],
     'installable': True,
     'application': False,
-    'assets': {
-        'web.report_assets_common': [
-            '/dpm_invoice/static/src/scss/report.scss',
-        ],
-    },
 }
