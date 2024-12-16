@@ -1,22 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Define the paper format for dot matrix printer (if not already defined in other files) -->
-        <record id="paperformat_dpm_invoice_dot_matrix" model="report.paperformat">
-            <field name="name">DPM Invoice Dot Matrix Paper Format</field>
-            <field name="default" eval="True"/>
-            <field name="format">custom</field>
-            <field name="page_height">279</field>  <!-- 11 inches in mm -->
-            <field name="page_width">241</field>   <!-- 9.5 inches in mm -->
-            <field name="orientation">Portrait</field>
-            <field name="margin_top">3</field>
-            <field name="margin_bottom">3</field>
-            <field name="margin_left">3</field>
-            <field name="margin_right">3</field>
-            <field name="header_line" eval="False"/>
-            <field name="header_spacing">0</field>
-            <field name="dpi">72</field>  <!-- Typical for dot matrix printers -->
-        </record>
 
         <!-- Update the existing report for Credit Note -->
         <record id="dpm_cn_report" model="ir.actions.report">
