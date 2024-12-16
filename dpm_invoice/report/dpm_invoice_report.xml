@@ -30,7 +30,7 @@
             <field name="binding_type">report</field>
             <field name="paperformat_id" ref="paperformat_dpm_invoice_dot_matrix"/>
             <field name="groups_id" eval="[(4, ref('account.group_account_invoice')), (4, ref('account.group_account_readonly'))]"/>
-            <field name="sequence" eval="17"/>
+            <!-- <field name="sequence" eval="17"/> -->
         </record>
 
         <!-- The existing action_report_invoice_dpm record -->
