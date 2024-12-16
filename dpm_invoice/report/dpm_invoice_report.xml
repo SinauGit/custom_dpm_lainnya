@@ -6,17 +6,31 @@
             <field name="name">DPM Invoice Dot Matrix Paper Format</field>
             <field name="default" eval="True"/>
             <field name="format">custom</field>
-            <field name="page_height">279</field>  <!-- 11 inches in mm -->
-            <field name="page_width">241</field>   <!-- 9.5 inches in mm -->
+            <!-- Ukuran kertas disesuaikan untuk 9.5 x 11 inches -->
+            <field name="page_height">279</field> <!-- 11 inches in mm -->
+            <field name="page_width">241</field>  <!-- 9.5 inches in mm -->
+
+            <!-- Orientasi ditetapkan ke Portrait -->
             <field name="orientation">Portrait</field>
-            <field name="margin_top">3</field>
-            <field name="margin_bottom">10</field>
-            <field name="margin_left">3</field>
-            <field name="margin_right">3</field>
-            <field name="header_line" eval="True"/>
-            <field name="header_spacing">10</field>
-            <field name="dpi">72</field>  <!-- Typical for dot matrix printers -->
+
+            <!-- Margin dioptimalkan untuk area cetak dot matrix -->
+            <field name="margin_top">5</field>
+            <field name="margin_bottom">5</field>
+            <field name="margin_left">5</field>
+            <field name="margin_right">5</field>
+
+            <!-- Header line dimatikan jika tidak diperlukan -->
+            <field name="header_line" eval="False"/>
+            <field name="header_spacing">0</field>
+
+            <!-- DPI lebih rendah untuk dot matrix printer -->
+            <field name="dpi">90</field> <!-- DPI 90 agar lebih stabil untuk dot matrix -->
+
+            <!-- Pengaturan tambahan -->
+            <field name="margin_unit">mm</field>
+            <field name="page_unit">mm</field>
         </record>
+
 
         <!-- Update the existing report to use the new paper format -->
         <record id="custom_invoice_report" model="ir.actions.report">
