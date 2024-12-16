@@ -3,7 +3,7 @@
     <data>
 
         <!-- Update the existing report for Credit Note -->
-        <record id="dpm_cn_report" model="ir.actions.report">
+        <record id="action_report_cn_dpm" model="ir.actions.report">
             <field name="name">DPM Credit Note</field>
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>

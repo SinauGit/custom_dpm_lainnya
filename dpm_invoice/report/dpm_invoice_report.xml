@@ -28,7 +28,7 @@
         <!-- </record> -->
 
         <!-- Update the existing report to use the new paper format -->
-        <record id="custom_invoice_report" model="ir.actions.report">
+        <record id="action_report_invoice_dpm" model="ir.actions.report">
             <field name="name">DPM Invoice</field>
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
