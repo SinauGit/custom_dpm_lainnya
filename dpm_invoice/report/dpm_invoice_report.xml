@@ -25,7 +25,7 @@
 
             <!-- DPI lebih rendah untuk dot matrix printer -->
             <!-- <field name="dpi">90</field> DPI 90 agar lebih stabil untuk dot matrix -->
-        </record>
+        <!-- </record> -->
 
         <!-- Update the existing report to use the new paper format -->
         <record id="custom_invoice_report" model="ir.actions.report">
