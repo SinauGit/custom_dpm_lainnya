@@ -79,12 +79,12 @@
                                 <div class="col-12">
                                     <p class="mb-2">
                                         <strong>Remarks:</strong> 
-                                        On Sales Orders <span class="dpm-value" t-esc="o.invoice_origin or 'No-Sales Order'" style="font-weight: bold;"/>. 
-                                        Based On Deliveries No. 
+                                        <strong>On Sales Orders</strong> <span class="dpm-value" t-esc="o.invoice_origin or 'No-Sales Order'" style="font-weight: bold;"/>. 
+                                        <strong>Based On Deliveries No.</strong> 
                                         <t t-set="picking" t-value="env['stock.picking'].search([('sale_id.name', '=', o.invoice_origin), ('state', '=', 'done')], limit=1)"/>
                                         <span class="dpm-value" t-esc="picking.name or 'Belum Di Validate'" style="font-weight: bold;"/>.
                                         <br/>
-                                        <span class="dpm-value" t-esc="o.narration or ''" style="font-weight: bold;"/>
+                                        <strong t-esc="o.narration or ''" style="font-weight: bold;"/>
                                     </p>
                                 </div>
                             </div>
