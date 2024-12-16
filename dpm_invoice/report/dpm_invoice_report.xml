@@ -1,34 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- Define the new paper format for dot matrix printer -->
-        <record id="paperformat_dpm_invoice_dot_matrix" model="report.paperformat">
-            <field name="name">DPM Invoice Dot Matrix Paper Format</field>
-            <field name="default" eval="True"/>
-            <field name="format">custom</field>
-            <!-- Ukuran kertas disesuaikan untuk 9.5 x 11 inches -->
-            <field name="page_height">279</field> <!-- 11 inches in mm -->
-            <field name="page_width">241</field>  <!-- 9.5 inches in mm -->
-
-            <!-- Orientasi ditetapkan ke Portrait -->
-            <field name="orientation">Portrait</field>
-
-            <!-- Margin dioptimalkan untuk area cetak dot matrix -->
-            <field name="margin_top">5</field>
-            <field name="margin_bottom">5</field>
-            <field name="margin_left">5</field>
-            <field name="margin_right">5</field>
-
-            <!-- Header line dimatikan jika tidak diperlukan -->
-            <field name="header_line" eval="False"/>
-            <field name="header_spacing">0</field>
-
-            <!-- DPI lebih rendah untuk dot matrix printer -->
-            <field name="dpi">90</field> <!-- DPI 90 agar lebih stabil untuk dot matrix -->
-        </record>
 
         <!-- Update the existing report to use the new paper format -->
-        <record id="custom_invoice_report" model="ir.actions.report">
+        <record id="action_report_invoice_dpm" model="ir.actions.report">
             <field name="name">DPM Invoice</field>
             <field name="model">account.move</field>
             <field name="report_type">qweb-pdf</field>
@@ -37,7 +12,7 @@
             <field name="print_report_name">(object._get_report_base_filename())</field>
             <field name="binding_model_id" ref="account.model_account_move"/>
             <field name="binding_type">report</field>
-            <field name="paperformat_id" ref="paperformat_dpm_invoice_dot_matrix"/>
+            <!-- <field name="paperformat_id" ref="paperformat_dpm_invoice_dot_matrix"/> -->
             <field name="groups_id" eval="[(4, ref('account.group_account_invoice')), (4, ref('account.group_account_readonly'))]"/>
             <!-- <field name="sequence" eval="17"/> -->
         </record>
