@@ -1,10 +1,10 @@
 {
     "name": "DPM Discount Amount",
     "version": "17.0.1.1.0",
-    "summary": "Diskon dengan nominal tetap pada Sales Order dan Invoice",
+    "summary": "Fixed nominal discount on Sales Order and Invoice",
     "category": "Sales/Sales",
-    "author": "PT. Digital Prima Sejahtera",
-    "website": "https://dpm.id",
+    "author": "",
+    "website": "",
     "depends": [
         "base",
         "sale",
