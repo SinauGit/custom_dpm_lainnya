@@ -3,7 +3,7 @@
     <data>
 
         <record id="group_fixed_discount" model="res.groups">
-            <field name="name">Diskon Nominal</field>
+            <field name="name">Discount Amount</field>
             <field name="category_id" ref="base.module_category_hidden"/>
         </record>
 

@@ -28,7 +28,7 @@ class AccountMoveLine(models.Model):
     # Override field discount
     discount = fields.Float(
         string='Discount (%)', 
-        digits=(16, 10),  # 16 digit total, 10 digit desimal
+        digits=(16, 15),  # 16 digit total, 15 digit desimal
         default=0.0
     )
 
