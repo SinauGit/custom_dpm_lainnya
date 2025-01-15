@@ -36,10 +36,10 @@ class AccountMove(models.Model):
                 for line in move.invoice_line_ids
             )
 
-    @api.depends('invoice_line_ids.discount_fixed')
+    @api.depends('invoice_line_ids.discount_fixed', 'invoice_line_ids.quantity')
     def _compute_total_discount_fixed(self):
         for move in self:
             move.total_discount_fixed = sum(
-                line.discount_fixed 
+                line.discount_fixed * line.quantity
                 for line in move.invoice_line_ids
-            ) 
+            )
