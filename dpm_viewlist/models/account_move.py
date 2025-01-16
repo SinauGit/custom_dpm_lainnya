@@ -44,3 +44,15 @@ class AccountMove(models.Model):
                 if line.discount_fixed:  # Memastikan discount_fixed ada dan tidak kosong
                     total_discount += line.discount_fixed * line.quantity
             move.total_discount_fixed = total_discount
+
+
+    @api.model
+    def action_draft(self):
+        # Apply the override only for customer invoices
+        if self.move_type == 'out_invoice':  # Customer Invoice
+            if not self.env.user.has_group('base.group_multi_company'):
+                raise exceptions.AccessError(_(
+                    "You do not have the necessary permissions to reset to draft. "
+                ))
+
+        return super(AccountMove, self).action_draft()
