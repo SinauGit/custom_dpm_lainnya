@@ -46,13 +46,13 @@ class AccountMove(models.Model):
             move.total_discount_fixed = total_discount
 
 
-    @api.model
-    def action_draft(self):
+    def button_draft(self):
         # Apply the override only for customer invoices
-        if self.move_type == 'out_invoice':  # Customer Invoice
-            if not self.env.user.has_group('base.group_multi_company'):
-                raise exceptions.AccessError(_(
-                    "You do not have the necessary permissions to reset to draft. "
-                ))
-
-        return super(AccountMove, self).action_draft()
+        for record in self:
+            if record.move_type == 'out_invoice':  # Customer Invoice
+                if not self.env.user.has_group('base.group_multi_company'):
+                    raise exceptions.AccessError(_(
+                        "You do not have the necessary permissions to reset to draft. "
+                    ))
+        # Call the original method
+        return super().button_draft()
