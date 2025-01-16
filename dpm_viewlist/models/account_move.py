@@ -39,7 +39,8 @@ class AccountMove(models.Model):
     @api.depends('invoice_line_ids.discount_fixed', 'invoice_line_ids.quantity')
     def _compute_total_discount_fixed(self):
         for move in self:
-            move.total_discount_fixed = sum(
-                line.discount_fixed * line.quantity
-                for line in move.invoice_line_ids
-            )
+            total_discount = 0
+            for line in move.invoice_line_ids:
+                if line.discount_fixed:  # Memastikan discount_fixed ada dan tidak kosong
+                    total_discount += line.discount_fixed * line.quantity
+            move.total_discount_fixed = total_discount
