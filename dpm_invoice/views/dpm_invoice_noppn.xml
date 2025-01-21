@@ -117,11 +117,11 @@
                                             <!-- <td class="text-center" style="font-weight: bold;"><span t-esc="line.product_id.default_code or ''" style="font-weight: bold;"/></td> -->
                                             <td class="text-center" style="font-weight: bold;">
                                                 <!-- Memperbaiki pemanggilan warna produk -->
-                                                <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Color').value_ids.mapped('name')) or 'Hitam'" style="font-weight: bold;"/>
+                                                <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Color').value_ids.mapped('name')) or ''" style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
                                                 <!-- Memperbaiki pemanggilan ukuran produk -->
-                                                <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Size').value_ids.mapped('name')) or 'L'" style="font-weight: bold;"/>
+                                                <span t-esc="', '.join(line.product_id.product_tmpl_id.attribute_line_ids.filtered(lambda x: x.attribute_id.name == 'Size').value_ids.mapped('name')) or ''" style="font-weight: bold;"/>
                                             </td>
                                             <td class="text-center" style="font-weight: bold;">
                                                 <span t-esc="'%.2f' % line.quantity" style="font-weight: bold;"/>
