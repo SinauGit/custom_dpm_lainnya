@@ -7,6 +7,20 @@ class AccountMove(models.Model):
         self.ensure_one()
         return 'DPM %s' % (self.name)
 
+    total_after_discount = fields.Monetary(
+        string='Total After Discount',
+        compute='_compute_total_after_discount',
+        store=True,
+        currency_field='currency_id',
+    )
+
+    total_tax_base = fields.Monetary(
+        string='Total Tax Base',
+        compute='_compute_total_tax_base',
+        store=True,
+        currency_field='currency_id',
+    )
+
     @api.depends('invoice_line_ids.subtotal_after_discount')
     def _compute_total_after_discount(self):
         for move in self:
