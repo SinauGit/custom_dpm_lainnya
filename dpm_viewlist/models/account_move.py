@@ -23,6 +23,20 @@ class AccountMove(models.Model):
         currency_field='currency_id',
     )
 
+    subtotal_after_discount = fields.Monetary(
+        string='Subtotal After Discount',
+        compute='_compute_subtotal_after_discount',
+        store=True,
+        currency_field='currency_id',
+    )
+
+    tax_base_amount = fields.Monetary(
+        string='Tax Base Amount',
+        compute='_compute_tax_base_amount',
+        store=True,
+        currency_field='currency_id',
+    )
+
     @api.depends('invoice_line_ids.quantity')
     def _compute_total_qty(self):
         for move in self:
@@ -41,10 +55,19 @@ class AccountMove(models.Model):
         for move in self:
             total_discount = 0
             for line in move.invoice_line_ids:
-                if line.discount_fixed:  # Memastikan discount_fixed ada dan tidak kosong
+                if line.discount_fixed:
                     total_discount += line.discount_fixed * line.quantity
             move.total_discount_fixed = total_discount
 
+    @api.depends('total_subtotal', 'total_discount_fixed')
+    def _compute_subtotal_after_discount(self):
+        for move in self:
+            move.subtotal_after_discount = move.total_subtotal - move.total_discount_fixed
+
+    @api.depends('subtotal_after_discount')
+    def _compute_tax_base_amount(self):
+        for move in self:
+            move.tax_base_amount = move.subtotal_after_discount * (11/12) if move.subtotal_after_discount else 0.0
 
     def button_draft(self):
         # Apply the override only for customer invoices

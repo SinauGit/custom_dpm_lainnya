@@ -9,6 +9,8 @@
                 <field name="total_qty" optional="show" sum="Total Quantity"/>
                 <field name="total_discount_fixed" optional="show" sum="Total Discount"/>
                 <field name="total_subtotal" optional="show" sum="Total Subtotal"/>
+                <field name="subtotal_after_discount" optional="show" sum="Total After Discount"/>
+                <field name="tax_base_amount" optional="show" sum="Total Tax Base"/>
                 <field name="invoice_line_ids" column_invisible="1"/>
             </xpath>
         </field>
@@ -23,6 +25,8 @@
                 <field name="total_qty" optional="show" sum="Total Quantity"/>
                 <field name="total_discount_fixed" optional="show" sum="Total Discount"/>
                 <field name="total_subtotal" optional="show" sum="Total Subtotal"/>
+                <field name="subtotal_after_discount" optional="show" sum="Total After Discount"/>
+                <field name="tax_base_amount" optional="show" sum="Total Tax Base"/>
                 <field name="invoice_line_ids" column_invisible="1"/>
             </xpath>
         </field>
