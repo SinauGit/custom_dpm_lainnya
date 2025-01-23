@@ -151,7 +151,7 @@
                                 <div class="col-6 text-center">
                                     <!-- Kosong untuk menggeser total quantity ke kiri -->
                                     <p style="margin-bottom: 2px;"><strong>Total Quantity:</strong> 
-                                         <span t-esc="o.total_qty or 0.00" style="font-weight: bold;"/>
+                                         <span t-esc="'{:.2f}'.format(o.total_qty)" style="font-weight: bold;"/>
                                     </p>
                                 </div>
                                 <div class="col-6 text-right">
