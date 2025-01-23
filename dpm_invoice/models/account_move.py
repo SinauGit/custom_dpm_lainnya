@@ -21,15 +21,25 @@ class AccountMove(models.Model):
         currency_field='currency_id',
     )
 
-    @api.depends('invoice_line_ids.subtotal_after_discount')
+    @api.depends('invoice_line_ids.price_unit', 'invoice_line_ids.quantity', 
+                'invoice_line_ids.discount', 'invoice_line_ids.discount_fixed')
     def _compute_total_after_discount(self):
         for move in self:
-            move.total_after_discount = sum(move.invoice_line_ids.mapped('subtotal_after_discount'))
+            total_before_discount = sum(
+                line.price_unit * line.quantity 
+                for line in move.invoice_line_ids
+            )
+            total_discount = sum(
+                (line.price_unit * line.quantity * line.discount / 100.0) + 
+                (line.discount_fixed * line.quantity if line.discount_fixed else 0)
+                for line in move.invoice_line_ids
+            )
+            move.total_after_discount = total_before_discount - total_discount
 
-    @api.depends('invoice_line_ids.tax_base_amount')
+    @api.depends('total_after_discount')
     def _compute_total_tax_base(self):
         for move in self:
-            move.total_tax_base = sum(move.invoice_line_ids.mapped('tax_base_amount'))
+            move.total_tax_base = (move.total_after_discount * 11.0) / 12.0
 
 
 class AccountMoveLine(models.Model):
@@ -40,7 +50,6 @@ class AccountMoveLine(models.Model):
         compute='_compute_line_subtotal_after_discount',
         store=True,
         currency_field='currency_id',
-        help="Total line setelah dikurangi diskon",
     )
 
     tax_base_amount = fields.Monetary(
@@ -48,7 +57,6 @@ class AccountMoveLine(models.Model):
         compute='_compute_line_tax_base_amount',
         store=True,
         currency_field='currency_id',
-        help="DPP PPN line (11/12 dari Subtotal After Discount)",
     )
 
     @api.depends('price_unit', 'quantity', 'discount', 'discount_fixed')
