@@ -151,7 +151,7 @@
                                 <div class="col-6 text-center">
                                     <!-- Kosong untuk menggeser total quantity ke kiri -->
                                     <p style="margin-bottom: 2px;"><strong>Total Quantity:</strong> 
-                                         <span t-esc="'{:.2f}'.format(sum(line.quantity for line in o.invoice_line_ids) or 0.00)" style="font-weight: bold;"/>
+                                         <span t-esc="total_qty" style="font-weight: bold;"/>
                                     </p>
                                 </div>
                                 <div class="col-6 text-right">
@@ -160,7 +160,7 @@
                                         <tr>
                                             <td><strong>Subtotal Before Discount</strong></td>
                                             <td class="text-end">
-                                                <span t-esc="sum(line.price_unit * line.quantity for line in o.invoice_line_ids) or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;" />
+                                                <span t-esc="o.total_subtotal or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
                                             </td>
                                         </tr>
                                         <!-- Discount -->
@@ -170,17 +170,11 @@
                                                 <span t-esc="o.total_discount_fixed or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
                                             </td>
                                         </tr>
-                                        <!-- Biaya Kirim -->
-                                        <!-- <tr>
-                                            <td><strong>Shipping</strong></td>
-                                            <td class="text-end">
-                                                <span t-esc="int(o.delivery_cost or 0)" style="font-weight: bold; margin-right: 20px;"/>
-                                            </td>
-                                        </tr> -->
+                                        <!-- Setelah baris Discount -->
                                         <tr>
                                             <td><strong>Subtotal After Discount</strong></td>
                                             <td class="text-end">
-                                                <span t-esc="sum(o.invoice_line_ids.mapped('subtotal_after_discount')) or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
+                                                <span t-esc="o.subtotal_after_discount or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
                                             </td>
                                         </tr>
                                         <!-- Total Jumlah -->
