@@ -7,6 +7,9 @@ class AccountMove(models.Model):
         self.ensure_one()
         return 'DPM %s' % (self.name)
 
+class AccountMoveLine(models.Model):
+    _inherit = "account.move.line"
+
     subtotal_after_discount = fields.Monetary(
         string='Subtotal After Discount',
         compute='_compute_subtotal_after_discount',
