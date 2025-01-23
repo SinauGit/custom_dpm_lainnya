@@ -180,7 +180,7 @@
                                         <tr>
                                             <td><strong>Subtotal After Discount</strong></td>
                                             <td class="text-end">
-                                                <span t-esc="o.subtotal_after_discount" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
+                                                <span t-esc="sum(o.invoice_line_ids.mapped('subtotal_after_discount')) or 0.00" t-options='{"widget": "monetary", "display_currency": o.currency_id}' style="font-weight: bold; margin-right: 20px;"/>
                                             </td>
                                         </tr>
                                         <!-- Total Jumlah -->

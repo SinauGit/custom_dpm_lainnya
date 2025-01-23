@@ -7,6 +7,17 @@ class AccountMove(models.Model):
         self.ensure_one()
         return 'DPM %s' % (self.name)
 
+    @api.depends('invoice_line_ids.subtotal_after_discount')
+    def _compute_total_after_discount(self):
+        for move in self:
+            move.total_after_discount = sum(move.invoice_line_ids.mapped('subtotal_after_discount'))
+
+    @api.depends('invoice_line_ids.tax_base_amount')
+    def _compute_total_tax_base(self):
+        for move in self:
+            move.total_tax_base = sum(move.invoice_line_ids.mapped('tax_base_amount'))
+
+
 class AccountMoveLine(models.Model):
     _inherit = "account.move.line"
 
