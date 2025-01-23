@@ -1,10 +1,10 @@
 {
-    'name': 'DPM Invoice Report',
-    "version": "17.0.1.1.0",    
+    'name': 'DPM Invoice',
+    'version': '17.0.1.1.0',
     'summary': '',
     'author': '',
-    'category': 'Report',
-    'depends': ['account'],
+    'category': 'Accounting',
+    'depends': ['account', 'dpm_discount_amount'],
     'data': [
         'report/dpm_invoice_report.xml',
         'views/dpm_invoice.xml',
@@ -14,5 +14,5 @@
         'views/dpm_invoice_noppn.xml',
     ],
     'installable': True,
-    'application': False,
+    'auto_install': False,
 }
