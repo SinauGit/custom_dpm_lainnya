@@ -4,7 +4,7 @@
     'summary': '',
     'author': '',
     'category': 'Accounting',
-    'depends': ['account', 'dpm_discount_amount'],
+    'depends': ['account', 'dpm_discount_amount','dpm_viewlist'],
     'data': [
         'report/dpm_invoice_report.xml',
         'views/dpm_invoice.xml',
