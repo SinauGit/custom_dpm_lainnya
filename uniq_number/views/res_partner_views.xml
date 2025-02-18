@@ -25,7 +25,7 @@
         </field>
     </record>
 
-    <record id="view_order_tree_inherit" model="ir.ui.view">
+    <!-- <record id="view_order_tree_inherit" model="ir.ui.view">
         <field name="name">sale.order.tree.inherit.customer.sequence</field>
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_tree"/>
@@ -34,7 +34,7 @@
                 <field name="partner_unique_id" optional="show"/>
             </field>
         </field>
-    </record>
+    </record> -->
 
     <record id="view_order_tree_inherit" model="ir.ui.view">
         <field name="name">sale.order.tree.inherit.customer.sequence</field>
@@ -65,7 +65,7 @@
         <field name="inherit_id" ref="account.view_move_tree"/>
         <field name="arch" type="xml">
             <field name="name" position="after">
-                <field name="partner_unique_id" optional="show"/>
+                <field name="partner_unique_id" optional="show" string="Customer/Vendor Code"/>
             </field>
         </field>
     </record>
@@ -79,6 +79,42 @@
             <field name="name" position="after">
                 <field name="partner_unique_id" optional="show"/>
             </field>
+        </field>
+    </record>
+
+    <!-- Memastikan Purchase Order Tree View sudah benar -->
+    <record id="view_purchase_order_tree_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.tree.inherit.vendor.sequence</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree"/>
+        <field name="arch" type="xml">
+            <field name="name" position="after">
+                <field name="partner_unique_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <!-- Modifikasi Invoice Form View -->
+    <!-- <record id="view_move_form_inherit" model="ir.ui.view">
+        <field name="name">account.move.form.inherit.customer.sequence</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="before">
+                <field name="partner_unique_id" readonly="1" force_save="1" string="Customer/Vendor Code"/>
+            </xpath>
+        </field>
+    </record> -->
+
+    <!-- Tambahan untuk Purchase Form View -->
+    <record id="purchase_order_form_inherit" model="ir.ui.view">
+        <field name="name">purchase.order.form.inherit.vendor.sequence</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='partner_id']" position="before">
+                <field name="partner_unique_id"/>
+            </xpath>
         </field>
     </record>
 
