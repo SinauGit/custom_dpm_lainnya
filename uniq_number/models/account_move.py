@@ -6,7 +6,7 @@ class AccountMove(models.Model):
 
     partner_unique_id = fields.Char(
         compute='_compute_partner_code',
-        string='Partner Code',
+        string='Customer Code',
         store=True,
     )
     

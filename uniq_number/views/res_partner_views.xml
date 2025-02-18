@@ -104,7 +104,7 @@
         </field>
     </record>
 
-    <!-- Modifikasi Invoice Form View -->
+    <!-- Modifikasi Invoice Form View --> -->
     <!-- <record id="view_move_form_inherit" model="ir.ui.view">
         <field name="name">account.move.form.inherit.customer.sequence</field>
         <field name="model">account.move</field>
@@ -114,7 +114,7 @@
                 <field name="partner_unique_id" readonly="1" force_save="1" string="Customer/Vendor Code"/>
             </xpath>
         </field>
-    </record> -->
+    </record>
 
     <!-- Tambahan untuk Purchase Form View -->
     <record id="purchase_order_form_inherit" model="ir.ui.view">
