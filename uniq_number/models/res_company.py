@@ -6,5 +6,10 @@ class CompanySequence(models.Model):
     _inherit = 'res.company'
 
     customer_code = fields.Integer(string='Customer code', required=True,
-                                   help='Add the required customer code.')
-    next_code = fields.Integer(string='Next code', help='Expected next code')
+                                   help='Starting number for customer code.')
+    vendor_code = fields.Integer(string='Vendor code', required=True,
+                                   help='Starting number for vendor code.')
+    next_customer_code = fields.Integer(string='Next Customer code', 
+                                      help='Next number for customer code')
+    next_vendor_code = fields.Integer(string='Next Vendor code', 
+                                    help='Next number for vendor code')

@@ -2,25 +2,35 @@
 <odoo>
 <!--	Inherited Partner form for adding the sequence field-->
     <record id="view_partner_form" model="ir.ui.view">
-        <field name="name">res.partner.view.form.inherit.customer.sequence
-        </field>
+        <field name="name">res.partner.view.form.inherit.customer.sequence</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@id='individual']" position="after">
-                <field name="unique_id"/>
+                <field name="customer_rank" invisible="1"/>
+                <field name="supplier_rank" invisible="1"/>
+                <field name="customer_code" 
+                       invisible="customer_rank == 0"/>
+                <field name="vendor_code" 
+                       invisible="supplier_rank == 0"/>
             </xpath>
         </field>
     </record>
 <!--	Inherited Partner tree for adding the sequence field-->
     <record id="view_partner_tree" model="ir.ui.view">
-        <field name="name">res.partner.view.tree.inherit.customer.sequence
-        </field>
+        <field name="name">res.partner.view.tree.inherit.customer.sequence</field>
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_tree"/>
         <field name="arch" type="xml">
             <field name="display_name" position="after">
-                <field name="unique_id" optional="show"/>
+                <field name="customer_rank" column_invisible="1"/>
+                <field name="supplier_rank" column_invisible="1"/>
+                <field name="customer_code" 
+                       optional="show"
+                       invisible="customer_rank == 0"/>
+                <field name="vendor_code" 
+                       optional="show"
+                       invisible="supplier_rank == 0"/>
             </field>
         </field>
     </record>
